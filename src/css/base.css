@@ -20,3 +20,9 @@ body {
     top: -1000rem;
     white-space: nowrap;
 }
+
+.refresh-button {
+    display: block;
+    margin: 30px 0 0 20px;
+    font-size: 30px;
+}

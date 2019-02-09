@@ -25,4 +25,14 @@ document.addEventListener('DOMContentLoaded', () => {
         color: '#FFF',
     });
     image.render();
+
+    const button = document.createElement('input');
+    button.type = 'button';
+    button.value = 'Refresh';
+    button.className = 'refresh-button';
+    button.onclick = () => {
+        image.rerender();
+    };
+
+    document.body.appendChild(button);
 });

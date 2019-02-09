@@ -873,9 +873,23 @@ class Renderer {
             }
         } else {
             console.log('Render time: ', (Date.now() - this.renderStartedAt) / 1000); // eslint-disable-line
-            console.log('puppeteer: Finish'); // eslint-disable-line
+            if (window.puppeteer) {
+                console.log('puppeteer: Finish'); // eslint-disable-line
+            }
         }
     };
+
+    rerender = () => {
+        this.newState = {
+            textFullyRendered: false,
+            textLastRenderedLetter: '',
+            textFrame: 1,
+            authorFullyRendered: false,
+            authorLastRenderedLetter: '',
+            authorFrame: 1,
+        };
+        this.render();
+    }
 }
 
 export default Renderer;
