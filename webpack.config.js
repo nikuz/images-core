@@ -64,7 +64,11 @@ const rules = [
             options: {
                 cacheDirectory,
                 presets: [
-                    '@babel/preset-env',
+                    ['@babel/preset-env', {
+                        targets: {
+                            chrome: '72',
+                        },
+                    }],
                 ],
                 plugins: [
                     [
