@@ -1,7 +1,7 @@
-import renderer from '../src';
+import Renderer from '../src';
 
 document.addEventListener('DOMContentLoaded', () => {
-    renderer({
+    const image = new Renderer({
         container: 'body',
         width: 600,
         height: 600,
@@ -24,4 +24,5 @@ document.addEventListener('DOMContentLoaded', () => {
         overlay: 'border', // solid | lines | border
         color: '#FFF',
     });
+    image.render();
 });
