@@ -880,6 +880,9 @@ class Renderer {
     };
 
     rerender = () => {
+        const textFullyRendered = this.state.textFullyRendered;
+        const authorFullyRendered = this.state.authorFullyRendered;
+
         this.newState = {
             textFullyRendered: false,
             textLastRenderedLetter: '',
@@ -888,7 +891,9 @@ class Renderer {
             authorLastRenderedLetter: '',
             authorFrame: 1,
         };
-        this.render();
+        if (textFullyRendered && authorFullyRendered) {
+            this.render();
+        }
     }
 }
 
