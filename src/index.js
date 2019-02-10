@@ -196,6 +196,11 @@ class Renderer {
             color,
         } = this.state;
 
+        this.context.shadowOffsetX = 0;
+        this.context.shadowOffsetY = 0;
+        this.context.shadowColor = 0;
+        this.context.shadowBlur = 0;
+
         if (overlay === 'solid') {
             this.context.fillStyle = hexToRgbA('#000', 0.5);
             this.context.fillRect(
