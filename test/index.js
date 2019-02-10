@@ -26,13 +26,21 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     image.render();
 
-    const button = document.createElement('input');
-    button.type = 'button';
-    button.value = 'Refresh';
-    button.className = 'refresh-button';
-    button.onclick = () => {
+    const buttonRefresh = document.createElement('input');
+    buttonRefresh.type = 'button';
+    buttonRefresh.value = 'Refresh';
+    buttonRefresh.className = 'refresh-button';
+    buttonRefresh.onclick = () => {
         image.rerender();
     };
+    document.body.appendChild(buttonRefresh);
 
-    document.body.appendChild(button);
+    const buttonStop = document.createElement('input');
+    buttonStop.type = 'button';
+    buttonStop.value = 'Stop';
+    buttonStop.className = 'refresh-button';
+    buttonStop.onclick = () => {
+        image.stop();
+    };
+    document.body.appendChild(buttonStop);
 });

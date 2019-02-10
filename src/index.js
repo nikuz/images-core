@@ -39,8 +39,6 @@ class Renderer {
             return;
         }
 
-        this.renderStartedAt = Date.now();
-
         this.canvasEl = document.createElement('canvas');
         this.fontRenderEl = document.createElement('div');
         this.fontRenderEl.id = 'canvas-font-renderer';
@@ -514,6 +512,7 @@ class Renderer {
             textLettersOpacityStep,
             textFramePosition,
             textFramePositionStep,
+            textFullyRendered,
             authorFontLineHeight,
             canvasWidth,
             canvasHeight,
@@ -623,6 +622,10 @@ class Renderer {
             j++;
         }
 
+        if (textFullyRendered) {
+            return;
+        }
+
         switch (textEffect) {
             case 'type': {
                 const totalLettersCount = textLines.reduce((accumulator, currentValue) => (
@@ -729,6 +732,7 @@ class Renderer {
             authorFrameOpacityStep,
             authorFramePosition,
             authorFramePositionStep,
+            authorFullyRendered,
             canvasWidth,
             color,
             authorAlign,
@@ -780,6 +784,10 @@ class Renderer {
             }
         } else {
             this.fillText(color, author, x, y);
+        }
+
+        if (authorFullyRendered) {
+            return;
         }
 
         switch (authorEffect) {
@@ -846,6 +854,7 @@ class Renderer {
             }).catch((err) => {
                 console.error(err); // eslint-disable-line
             });
+            this.renderStartedAt = Date.now();
             return;
         }
 
@@ -913,9 +922,17 @@ class Renderer {
         };
 
         if (textFullyRendered && authorFullyRendered) {
+            this.renderStartedAt = Date.now();
             this.render();
         }
-    }
+    };
+
+    stop = () => {
+        this.newState = {
+            textFullyRendered: true,
+            authorFullyRendered: true,
+        };
+    };
 }
 
 export default Renderer;
