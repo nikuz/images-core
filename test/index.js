@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // text
         text: 'Specify the color of the box to write. For the general syntax of this option',
         textFontFamily: 'Kaushan Script',
-        textEffect: 'type', // type | fade lines | fade letters | slide lines | append lines | fade
+        textEffect: 'append lines', // type | fade lines | fade letters | slide lines | append lines | fade
         textAlign: 'right', // left | center | right
         textVerticalAlign: 'top', // top | center | bottom
         // author

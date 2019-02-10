@@ -74,8 +74,8 @@ class Renderer {
         textFullyRendered: false,
         textLastRenderedLetter: '',
         textFrame: 1,
-        textFrameOpacity: 0.5,
-        textFrameOpacityStep: 0.5,
+        textFrameOpacity: 0.1,
+        textFrameOpacityStep: 0.1,
         textLettersOpacity: 0,
         textLettersOpacityStep: 0.05,
         textFramePosition: 0,
@@ -344,6 +344,20 @@ class Renderer {
         })
     );
 
+    fillText = (color, text, x, y, shadow = true) => {
+        if (!this.context) {
+            return;
+        }
+        this.context.fillStyle = color;
+        if (shadow) {
+            this.context.shadowOffsetX = 3;
+            this.context.shadowOffsetY = 3;
+            this.context.shadowColor = hexToRgbA('#000', 0.3);
+            this.context.shadowBlur = 4;
+        }
+        this.context.fillText(text, x, y);
+    };
+
     animationType = (
         frame,
         line,
@@ -361,8 +375,7 @@ class Renderer {
 
         let lastRenderedLetter;
         if (frame > renderedLettersCount + line.length) {
-            this.context.fillStyle = color;
-            this.context.fillText(line, x, y);
+            this.fillText(color, line, x, y);
         } else {
             let letterIndex = frame;
             if (multiline) {
@@ -370,13 +383,17 @@ class Renderer {
             }
             const currentText = line.substr(0, letterIndex - 1);
             if (currentText.length) {
-                this.context.fillStyle = color;
-                this.context.fillText(currentText, x, y);
+                this.fillText(color, currentText, x, y);
             }
             const lineMetrics = this.context.measureText(currentText);
             lastRenderedLetter = line.substr(letterIndex - 1, 1);
-            this.context.fillStyle = hexToRgbA(color, frameOpacity);
-            this.context.fillText(lastRenderedLetter, x + lineMetrics.width, y);
+            this.fillText(
+                hexToRgbA(color, frameOpacity),
+                lastRenderedLetter,
+                x + lineMetrics.width,
+                y,
+                false
+            );
         }
 
         return lastRenderedLetter;
@@ -394,8 +411,7 @@ class Renderer {
 
         const { color } = this.state;
 
-        this.context.fillStyle = hexToRgbA(color, frameOpacity);
-        this.context.fillText(line, x, y);
+        this.fillText(hexToRgbA(color, frameOpacity), line, x, y);
     };
 
     animationFadeLine = (
@@ -413,8 +429,7 @@ class Renderer {
         const { color } = this.state;
 
         if (frame - 1 > lineCount) {
-            this.context.fillStyle = color;
-            this.context.fillText(line, x, y);
+            this.fillText(color, line, x, y);
         }
         if (frame - 1 === lineCount) {
             this.animationFade(line, frameOpacity, x, y);
@@ -439,12 +454,14 @@ class Renderer {
         } = this.state;
 
         const margin = remapValue(framePosition, 0, 1, marginLeft, 0);
-        this.context.fillStyle = hexToRgbA(color, frameOpacity);
+        let targetX = x;
+        let targetY = y;
         if (direction === 'x') {
-            this.context.fillText(line, x - margin, y);
+            targetX = x - margin;
         } else {
-            this.context.fillText(line, x, y - margin);
+            targetY = y - margin;
         }
+        this.fillText(hexToRgbA(color, frameOpacity), line, targetX, targetY);
     };
 
     animationSlideLine = (
@@ -464,8 +481,7 @@ class Renderer {
         const { color } = this.state;
 
         if (frame - 1 > lineCount) {
-            this.context.fillStyle = color;
-            this.context.fillText(line, x, y);
+            this.fillText(color, line, x, y);
         }
         if (frame - 1 === lineCount) {
             this.animationSlide(line, frameOpacity, framePosition, x, y, direction);
@@ -555,15 +571,16 @@ class Renderer {
                 if (textEffect === 'fade letters') {
                     const lineLettersFade = textLettersFade[j];
 
-                    for (let t = 1, tl = line.length; t <= tl; i++) {
+                    for (let t = 1, tl = line.length; t <= tl; t++) {
                         const prevLetters = this.context.measureText(line.substr(0, t - 1));
                         const currentLetter = line.substr(t - 1, 1);
+                        let letterColor;
                         if (lineLettersFade.includes(t)) {
-                            this.context.fillStyle = hexToRgbA(color, textLettersOpacity);
+                            letterColor = hexToRgbA(color, textLettersOpacity);
                         } else {
-                            this.context.fillStyle = hexToRgbA(color, textFrameOpacity);
+                            letterColor = hexToRgbA(color, textFrameOpacity);
                         }
-                        this.context.fillText(currentLetter, x + prevLetters.width, y);
+                        this.fillText(letterColor, currentLetter, x + prevLetters.width, y);
                     }
                 }
                 if (textEffect === 'fade') {
@@ -594,8 +611,7 @@ class Renderer {
                     );
                 }
             } else {
-                this.context.fillStyle = color;
-                this.context.fillText(line, x, y);
+                this.fillText(color, line, x, y);
             }
 
             renderedLettersCount += line.length;
@@ -758,8 +774,7 @@ class Renderer {
                 this.animationSlide(author, authorFrameOpacity, authorFramePosition, x, y, 'y');
             }
         } else {
-            this.context.fillStyle = color;
-            this.context.fillText(author, x, y);
+            this.fillText(color, author, x, y);
         }
 
         switch (authorEffect) {
@@ -830,8 +845,8 @@ class Renderer {
         }
 
         this.renderImage();
-        this.renderOverlay();
         this.renderText();
+        this.renderOverlay();
         if (textFullyRendered) {
             this.renderAuthor();
         }
