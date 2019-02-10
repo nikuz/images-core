@@ -891,6 +891,7 @@ class Renderer {
             authorLastRenderedLetter: '',
             authorFrame: 1,
         };
+
         if (textFullyRendered && authorFullyRendered) {
             this.render();
         }
