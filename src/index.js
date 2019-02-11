@@ -1,5 +1,4 @@
 
-import './css/base.css';
 import './css/fonts.css';
 
 const remapValue = (value, inMin, inMax, outMin, outMax) => {

@@ -1,4 +1,6 @@
+
 import Renderer from '../src';
+import './styles.css';
 
 document.addEventListener('DOMContentLoaded', () => {
     const image = new Renderer({

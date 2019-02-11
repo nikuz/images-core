@@ -38,6 +38,12 @@ if (isProduction) {
     plugins.push(
         new webpack.HotModuleReplacementPlugin()
     );
+    plugins.push(
+        new CopyWebpackPlugin([{
+            from: path.resolve(appDirectory, './test/graphics'),
+            to: dstPath,
+        }])
+    );
 }
 
 const rules = [
