@@ -2,7 +2,6 @@ const fs = require('fs');
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
 
 let scriptName = 'bundle.js';
 const isProduction = process.env.NODE_ENV === 'production';
@@ -32,27 +31,9 @@ const plugins = [
 ];
 
 let cacheDirectory = true;
-let optimization;
 if (isProduction) {
     cacheDirectory = false;
-    optimization = {
-        minimizer: [
-            new TerserPlugin({
-                sourceMap: false,
-                terserOptions: {
-                    ecma: 6,
-                    mangle: false,
-                    output: {
-                        beautify: true,
-                    },
-                    compress: {
-                        join_vars: false,
-                    },
-                },
-            }),
-        ],
-    };
-    devtool = 'source-map';
+    devtool = false;
 } else {
     plugins.push(
         new webpack.HotModuleReplacementPlugin()
@@ -130,7 +111,10 @@ const options = {
             ignored: /node_modules/,
         },
     },
-    optimization,
+    // optimization,
+    optimization: {
+        minimize: false,
+    },
     performance: {
         hints: false,
     },
