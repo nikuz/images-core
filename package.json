@@ -7,7 +7,7 @@
   ],
   "main": "dst/bundle.js",
   "scripts": {
-    "server": "NODE_ENV=development webpack-dev-server",
+    "start": "NODE_ENV=development webpack-dev-server",
     "build": "NODE_ENV=production webpack",
     "eslint": "eslint ./webpack.config.js ./src ./test -f table",
     "resize": "convert ./src/public/graphics/002.jpg -resize 1080x1080^ -gravity center -crop 1080x1080+0+0 -blur 0x8 ./src/public/graphics/output.jpg",

@@ -1,3 +1,4 @@
+
 const fs = require('fs');
 const path = require('path');
 const webpack = require('webpack');
@@ -14,17 +15,6 @@ const publicPath = path.resolve(appDirectory, './src/public');
 const indexPath = path.resolve(appDirectory, publicPath, 'index.html');
 
 const plugins = [
-    new CopyWebpackPlugin([{
-        from: path.resolve(appDirectory, publicPath),
-        to: dstPath,
-    }]),
-    new HtmlWebpackPlugin({
-        filename: 'index.html',
-        template: indexPath,
-        scriptName,
-        rootPath: '/',
-        inject: false,
-    }),
     new webpack.EnvironmentPlugin([
         'NODE_ENV',
     ]),
@@ -39,8 +29,18 @@ if (isProduction) {
         new webpack.HotModuleReplacementPlugin()
     );
     plugins.push(
+        new HtmlWebpackPlugin({
+            filename: 'index.html',
+            template: indexPath,
+            scriptName,
+            rootPath: '/',
+            inject: false,
+        }),
         new CopyWebpackPlugin([{
-            from: path.resolve(appDirectory, './test/graphics'),
+            from: path.resolve(appDirectory, publicPath),
+            to: dstPath,
+        }, {
+            from: path.resolve(appDirectory, './test/public'),
             to: dstPath,
         }])
     );
@@ -78,7 +78,7 @@ const rules = [
         test: /\.(otf|ttf|eot|woff|woff2)$/,
         use: [
             {
-                loader: require.resolve('file-loader'),
+                loader: require.resolve('url-loader'),
                 options: {
                     limit: 1000000,
                     name: '/fonts/[name].[ext]',
