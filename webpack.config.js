@@ -111,10 +111,6 @@ const options = {
             ignored: /node_modules/,
         },
     },
-    // optimization,
-    optimization: {
-        minimize: false,
-    },
     performance: {
         hints: false,
     },
