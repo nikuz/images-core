@@ -3,7 +3,7 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-let scriptName = 'bundle.js';
+const scriptName = 'bundle.js';
 const isProduction = process.env.NODE_ENV === 'production';
 let devtool = 'eval-source-map';
 const CopyWebpackPlugin = require('copy-webpack-plugin');
