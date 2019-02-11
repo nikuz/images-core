@@ -6,9 +6,6 @@ const TerserPlugin = require('terser-webpack-plugin');
 
 let scriptName = 'bundle.js';
 const isProduction = process.env.NODE_ENV === 'production';
-if (isProduction) {
-    scriptName = 'bundle.min.js';
-}
 let devtool = 'eval-source-map';
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
@@ -41,9 +38,16 @@ if (isProduction) {
     optimization = {
         minimizer: [
             new TerserPlugin({
-                sourceMap: true,
+                sourceMap: false,
                 terserOptions: {
                     ecma: 6,
+                    mangle: false,
+                    output: {
+                        beautify: true,
+                    },
+                    compress: {
+                        join_vars: false,
+                    },
                 },
             }),
         ],
