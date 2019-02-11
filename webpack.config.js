@@ -49,11 +49,7 @@ const rules = [
             options: {
                 cacheDirectory,
                 presets: [
-                    ['@babel/preset-env', {
-                        targets: {
-                            chrome: '72',
-                        },
-                    }],
+                    '@babel/preset-env',
                 ],
                 plugins: [
                     [
@@ -110,6 +106,9 @@ const options = {
         watchOptions: {
             ignored: /node_modules/,
         },
+    },
+    optimization: {
+        minimize: false,
     },
     performance: {
         hints: false,

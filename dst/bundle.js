@@ -1,1 +1,1689 @@
-module.exports=function(t){var e={};function n(i){if(e[i])return e[i].exports;var r=e[i]={i:i,l:!1,exports:{}};return t[i].call(r.exports,r,r.exports,n),r.l=!0,r.exports}return n.m=t,n.c=e,n.d=function(t,e,i){n.o(t,e)||Object.defineProperty(t,e,{enumerable:!0,get:i})},n.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},n.t=function(t,e){if(1&e&&(t=n(t)),8&e)return t;if(4&e&&"object"==typeof t&&t&&t.__esModule)return t;var i=Object.create(null);if(n.r(i),Object.defineProperty(i,"default",{enumerable:!0,value:t}),2&e&&"string"!=typeof t)for(var r in t)n.d(i,r,function(e){return t[e]}.bind(null,r));return i},n.n=function(t){var e=t&&t.__esModule?function(){return t.default}:function(){return t};return n.d(e,"a",e),e},n.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},n.p="",n(n.s=2)}([function(t,e,n){"use strict";t.exports=function(t){var e=[];return e.toString=function(){return this.map(function(e){var n=function(t,e){var n=t[1]||"",i=t[3];if(!i)return n;if(e&&"function"==typeof btoa){var r=(a=i,"/*# sourceMappingURL=data:application/json;charset=utf-8;base64,"+btoa(unescape(encodeURIComponent(JSON.stringify(a))))+" */"),o=i.sources.map(function(t){return"/*# sourceURL="+i.sourceRoot+t+" */"});return[n].concat(o).concat([r]).join("\n")}var a;return[n].join("\n")}(e,t);return e[2]?"@media "+e[2]+"{"+n+"}":n}).join("")},e.i=function(t,n){"string"==typeof t&&(t=[[null,t,""]]);for(var i={},r=0;r<this.length;r++){var o=this[r][0];null!=o&&(i[o]=!0)}for(r=0;r<t.length;r++){var a=t[r];null!=a[0]&&i[a[0]]||(n&&!a[2]?a[2]=n:n&&(a[2]="("+a[2]+") and ("+n+")"),e.push(a))}},e}},function(t,e,n){var i,r,o={},a=(i=function(){return window&&document&&document.all&&!window.atob},function(){return void 0===r&&(r=i.apply(this,arguments)),r}),s=function(t){var e={};return function(t,n){if("function"==typeof t)return t();if(void 0===e[t]){var i=function(t,e){return e?e.querySelector(t):document.querySelector(t)}.call(this,t,n);if(window.HTMLIFrameElement&&i instanceof window.HTMLIFrameElement)try{i=i.contentDocument.head}catch(t){i=null}e[t]=i}return e[t]}}(),l=null,c=0,h=[],u=n(5);function f(t,e){for(var n=0;n<t.length;n++){var i=t[n],r=o[i.id];if(r){r.refs++;for(var a=0;a<r.parts.length;a++)r.parts[a](i.parts[a]);for(;a<i.parts.length;a++)r.parts.push(y(i.parts[a],e))}else{var s=[];for(a=0;a<i.parts.length;a++)s.push(y(i.parts[a],e));o[i.id]={id:i.id,refs:1,parts:s}}}}function d(t,e){for(var n=[],i={},r=0;r<t.length;r++){var o=t[r],a=e.base?o[0]+e.base:o[0],s={css:o[1],media:o[2],sourceMap:o[3]};i[a]?i[a].parts.push(s):n.push(i[a]={id:a,parts:[s]})}return n}function p(t,e){var n=s(t.insertInto);if(!n)throw new Error("Couldn't find a style target. This probably means that the value for the 'insertInto' parameter is invalid.");var i=h[h.length-1];if("top"===t.insertAt)i?i.nextSibling?n.insertBefore(e,i.nextSibling):n.appendChild(e):n.insertBefore(e,n.firstChild),h.push(e);else if("bottom"===t.insertAt)n.appendChild(e);else{if("object"!=typeof t.insertAt||!t.insertAt.before)throw new Error("[Style Loader]\n\n Invalid value for parameter 'insertAt' ('options.insertAt') found.\n Must be 'top', 'bottom', or Object.\n (https://github.com/webpack-contrib/style-loader#insertat)\n");var r=s(t.insertAt.before,n);n.insertBefore(e,r)}}function x(t){if(null===t.parentNode)return!1;t.parentNode.removeChild(t);var e=h.indexOf(t);e>=0&&h.splice(e,1)}function m(t){var e=document.createElement("style");if(void 0===t.attrs.type&&(t.attrs.type="text/css"),void 0===t.attrs.nonce){var i=function(){0;return n.nc}();i&&(t.attrs.nonce=i)}return g(e,t.attrs),p(t,e),e}function g(t,e){Object.keys(e).forEach(function(n){t.setAttribute(n,e[n])})}function y(t,e){var n,i,r,o;if(e.transform&&t.css){if(!(o="function"==typeof e.transform?e.transform(t.css):e.transform.default(t.css)))return function(){};t.css=o}if(e.singleton){var a=c++;n=l||(l=m(e)),i=b.bind(null,n,a,!1),r=b.bind(null,n,a,!0)}else t.sourceMap&&"function"==typeof URL&&"function"==typeof URL.createObjectURL&&"function"==typeof URL.revokeObjectURL&&"function"==typeof Blob&&"function"==typeof btoa?(n=function(t){var e=document.createElement("link");return void 0===t.attrs.type&&(t.attrs.type="text/css"),t.attrs.rel="stylesheet",g(e,t.attrs),p(t,e),e}(e),i=function(t,e,n){var i=n.css,r=n.sourceMap,o=void 0===e.convertToAbsoluteUrls&&r;(e.convertToAbsoluteUrls||o)&&(i=u(i));r&&(i+="\n/*# sourceMappingURL=data:application/json;base64,"+btoa(unescape(encodeURIComponent(JSON.stringify(r))))+" */");var a=new Blob([i],{type:"text/css"}),s=t.href;t.href=URL.createObjectURL(a),s&&URL.revokeObjectURL(s)}.bind(null,n,e),r=function(){x(n),n.href&&URL.revokeObjectURL(n.href)}):(n=m(e),i=function(t,e){var n=e.css,i=e.media;i&&t.setAttribute("media",i);if(t.styleSheet)t.styleSheet.cssText=n;else{for(;t.firstChild;)t.removeChild(t.firstChild);t.appendChild(document.createTextNode(n))}}.bind(null,n),r=function(){x(n)});return i(t),function(e){if(e){if(e.css===t.css&&e.media===t.media&&e.sourceMap===t.sourceMap)return;i(t=e)}else r()}}t.exports=function(t,e){if("undefined"!=typeof DEBUG&&DEBUG&&"object"!=typeof document)throw new Error("The style-loader cannot be used in a non-browser environment");(e=e||{}).attrs="object"==typeof e.attrs?e.attrs:{},e.singleton||"boolean"==typeof e.singleton||(e.singleton=a()),e.insertInto||(e.insertInto="head"),e.insertAt||(e.insertAt="bottom");var n=d(t,e);return f(n,e),function(t){for(var i=[],r=0;r<n.length;r++){var a=n[r];(s=o[a.id]).refs--,i.push(s)}t&&f(d(t,e),e);for(r=0;r<i.length;r++){var s;if(0===(s=i[r]).refs){for(var l=0;l<s.parts.length;l++)s.parts[l]();delete o[s.id]}}}};var F,v=(F=[],function(t,e){return F[t]=e,F.filter(Boolean).join("\n")});function b(t,e,n,i){var r=n?"":i.css;if(t.styleSheet)t.styleSheet.cssText=v(e,r);else{var o=document.createTextNode(r),a=t.childNodes;a[e]&&t.removeChild(a[e]),a.length?t.insertBefore(o,a[e]):t.appendChild(o)}}},function(t,e,n){"use strict";n.r(e);n(3),n(6);function i(t,e,n){return e in t?Object.defineProperty(t,e,{value:n,enumerable:!0,configurable:!0,writable:!0}):t[e]=n,t}const r=(t,e,n,i,r)=>t<e?i:t>n?r:(t-e)*(r-i)/(n-e)+i;function o(t,e){let n;return 3===(n=t.substring(1).split("")).length&&(n=[n[0],n[0],n[1],n[1],n[2],n[2]]),`rgba(${[(n=`0x4${n.join("")}`)>>16&255,n>>8&255,255&n].join(",")}, ${e})`}e.default=class{constructor(t){i(this,"canvasEl",void 0),i(this,"fontRenderEl",void 0),i(this,"renderStartedAt",void 0),i(this,"state",{canvasWidth:600,canvasHeight:600,image:null,imageURL:"",text:"",textLines:[],textLettersFade:[],maxTextLines:0,textFontFamily:"Kaushan Script",textFontSize:12,textFontLineHeight:0,textEffect:"fade",textFullyRendered:!1,textLastRenderedLetter:"",textFrame:1,textFrameOpacity:.1,textFrameOpacityStep:.1,textLettersOpacity:0,textLettersOpacityStep:.05,textFramePosition:0,textFramePositionStep:.1,textAlign:"right",textVerticalAlign:"top",author:"",authorLines:[],authorFontFamily:"Nickainley",authorFontSize:6,authorFontLineHeight:0,authorEffect:"fade",authorFullyRendered:!1,authorLastRenderedLetter:"",authorFrame:1,authorFrameOpacity:.1,authorFrameOpacityStep:.1,authorFramePosition:0,authorFramePositionStep:.1,authorAlign:"left",authorVerticalAlign:"bottom",animate:!0,frameQuality:.93,overlay:"border",marginTop:300,marginLeft:50,color:"#FFF"}),i(this,"setCanvasSize",()=>{const{canvasWidth:t,canvasHeight:e}=this.state;this.canvasEl&&(this.canvasEl.width=t,this.canvasEl.height=e)}),i(this,"loadImage",()=>new Promise((t,e)=>{const{imageURL:n}=this.state,i=new Image;i.onload=(()=>{this.newState={image:i},t()}),i.onerror=(t=>{e(t)}),i.src=n})),i(this,"renderImage",()=>{if(!this.context)return;const{image:t,canvasWidth:e,canvasHeight:n}=this.state;if(t){let i,r,o=t.width,a=t.height;const s=o/a;o>a?(a=n,r=0,i=-((o=n*s)-e)/2):(o=e,i=0,r=-((a=e/s)-n)/2),this.context.drawImage(t,i,r,o,a)}}),i(this,"renderOverlay",()=>{if(!this.context)return;const{overlay:t,canvasWidth:e,canvasHeight:n,marginLeft:i,color:r}=this.state;this.context.shadowOffsetX=0,this.context.shadowOffsetY=0,this.context.shadowColor=0,this.context.shadowBlur=0,"solid"===t&&(this.context.fillStyle=o("#000",.5),this.context.fillRect(i/2,i/2,e-i,n-i)),"border"===t&&(this.context.lineWidth=4,this.context.strokeStyle=r,this.context.rect(i/2,i/2,e-i,n-i),this.context.stroke()),"lines"===t&&(this.context.lineWidth=4,this.context.strokeStyle=r,this.context.beginPath(),this.context.moveTo(i/2,i/2),this.context.lineTo(e-i/2,i/2),this.context.stroke(),this.context.beginPath(),this.context.moveTo(i/2,n-i/2),this.context.lineTo(e-i/2,n-i/2),this.context.stroke())}),i(this,"getFont",(t,e)=>`${t}rem "${e}"`),i(this,"getFontProps",(t,e,n,i=!0)=>{if(!this.fontRenderEl||!this.context)return{};const{marginTop:r,marginLeft:o,canvasWidth:a,canvasHeight:s}=this.state,l=this.getFont(n,e);this.context.font=l,this.fontRenderEl.style.font=l,this.fontRenderEl.innerText=t;const c=this.fontRenderEl.offsetHeight,h=c+.2*c,u=Math.floor((s-r)/h);if(i){const r=[];let s="";const l=t.split(" ");return l.forEach((t,e)=>{this.context.measureText(`${s} ${t}`).width>a-o?(r.push(s),s=t):s+=""===s?t:` ${t}`,e===l.length-1&&r.push(s)}),r.length>u?this.getFontProps(t,e,n-1,i):{fontSize:n,fontLineHeight:h,maxTextLines:u,textLines:r}}return this.context.measureText(t).width>a-o?this.getFontProps(t,e,n-1,i):{fontSize:n,fontLineHeight:h}}),i(this,"loadText",()=>new Promise(t=>{if(!this.context)return;const{textFontFamily:e,textFontSize:n,authorFontFamily:i,authorFontSize:r}=this.state,o=this.state.text.trim(),a=this.state.author.trim();this.context.textBaseline="middle";const s=this.getFontProps(o,e,n),l=[];s.textLines.forEach(t=>{const e=Math.ceil(t.length/(5*Math.random()+10)),n=[];for(let i=0,r=t.length;i<r;i+=e)n.push(i);l.push(n)});const c=this.getFontProps(a,i,r,!1);this.newState={text:o,textLettersFade:l,textFontSize:s.fontSize,textFontLineHeight:s.fontLineHeight,maxTextLines:s.maxTextLines,textLines:s.textLines,author:a,authorFontSize:c.fontSize,authorFontLineHeight:c.fontLineHeight},t()})),i(this,"fillText",(t,e,n,i,r=!0)=>{this.context&&(this.context.fillStyle=t,r&&(this.context.shadowOffsetX=3,this.context.shadowOffsetY=3,this.context.shadowColor=o("#000",.3),this.context.shadowBlur=4),this.context.fillText(e,n,i))}),i(this,"animationType",(t,e,n,i,r,a,s=!0)=>{if(!this.context)return"";const{color:l}=this.state;let c;if(t>n+e.length)this.fillText(l,e,r,a);else{let h=t;s&&(h=t-n);const u=e.substr(0,h-1);u.length&&this.fillText(l,u,r,a);const f=this.context.measureText(u);c=e.substr(h-1,1),this.fillText(o(l,i),c,r+f.width,a,!1)}return c}),i(this,"animationFade",(t,e,n,i)=>{if(!this.context)return;const{color:r}=this.state;this.fillText(o(r,e),t,n,i)}),i(this,"animationFadeLine",(t,e,n,i,r,o)=>{if(!this.context)return;const{color:a}=this.state;t-1>n&&this.fillText(a,e,r,o),t-1===n&&this.animationFade(e,i,r,o)}),i(this,"animationSlide",(t,e,n,i,a,s)=>{if(!this.context)return;const{color:l,marginLeft:c}=this.state,h=r(n,0,1,c,0);let u=i,f=a;"x"===s?u=i-h:f=a-h,this.fillText(o(l,e),t,u,f)}),i(this,"animationSlideLine",(t,e,n,i,r,o,a,s)=>{if(!this.context)return;const{color:l}=this.state;t-1>n&&this.fillText(l,e,o,a),t-1===n&&this.animationSlide(e,i,r,o,a,s)}),i(this,"renderText",()=>{if(!this.context)return;const{animate:t,textEffect:e,textFontSize:n,textFontFamily:i,textFontLineHeight:a,textLines:s,maxTextLines:l,textLettersFade:c,textFrame:h,textFrameOpacity:u,textFrameOpacityStep:f,textLettersOpacity:d,textLettersOpacityStep:p,textFramePosition:x,textFramePositionStep:m,textFullyRendered:g,authorFontLineHeight:y,canvasWidth:F,canvasHeight:v,color:b,textAlign:w,textVerticalAlign:L,authorVerticalAlign:S,marginLeft:R}=this.state;this.context.font=this.getFont(n,i);let U=0,T=0,O="";for(let n=(l-s.length)/2,i=n+s.length;n<i;n++){const i=s[U],f=this.context.measureText(i);let p=R/2;"center"===w?p=(F-f.width)/2:"right"===w&&(p=F-f.width-R/2);let m=r(a,40,150,30,0);const g=l*a;"center"===L?m=(v-g)/2:"bottom"===L&&(m=v-g-y/2);let E=n*a+a/2+m;if("center"!==L&&"bottom"!==L||L!==S||(E-=y),t){if("type"===e&&(O=this.animationType(h,i,T,u,p,E)))break;if("fade lines"===e&&(this.animationFadeLine(h,i,U,u,p,E),h-1===U))break;if("fade letters"===e){const t=c[U];for(let e=1,n=i.length;e<=n;e++){const n=this.context.measureText(i.substr(0,e-1)),r=i.substr(e-1,1);let a;a=t.includes(e)?o(b,d):o(b,u),this.fillText(a,r,p+n.width,E)}}"fade"===e&&this.animationFade(i,u,p,E),"slide lines"===e&&this.animationSlideLine(h,i,U,u,x,p,E,"x"),"append lines"===e&&this.animationSlideLine(h,i,U,u,x,p,E,"y")}else this.fillText(b,i,p,E);T+=i.length,U++}if(!g)switch(e){case"type":{const e=s.reduce((t,e)=>t+e.length,0),n=" "===O||u>=1;this.newState={textFullyRendered:!t||T===e,textFrame:n?h+1:h,textFrameOpacity:n?f:u+f,textLastRenderedLetter:O};break}case"fade lines":this.newState={textFullyRendered:!t||h>s.length,textFrame:u>=1?h+1:h,textFrameOpacity:u>=1?f:u+f};break;case"fade letters":this.newState={textFullyRendered:!t||1===d,textFrame:d>=1?h+1:h,textFrameOpacity:u>=1?1:u+f,textLettersOpacity:d>=1?1:d+p};break;case"fade":this.newState={textFullyRendered:!t||1===u,textFrame:u>=1?h+1:h,textFrameOpacity:u>=1?1:u+f};break;case"slide lines":case"append lines":this.newState={textFullyRendered:!t||h>s.length,textFrame:x>=1?h+1:h,textFrameOpacity:u>=1?f:u+f,textFramePosition:x>=1?0:Number((x+m).toFixed(1))}}}),i(this,"renderAuthor",()=>{if(!this.context)return;const{animate:t,authorEffect:e,canvasHeight:n,authorFontSize:i,authorFontFamily:r,authorFontLineHeight:o,author:a,textLines:s,maxTextLines:l,textFontLineHeight:c,textVerticalAlign:h,authorFrame:u,authorFrameOpacity:f,authorFrameOpacityStep:d,authorFramePosition:p,authorFramePositionStep:x,authorFullyRendered:m,canvasWidth:g,color:y,authorAlign:F,authorVerticalAlign:v,marginLeft:b}=this.state;this.context.font=this.getFont(i,r);const w=this.context.measureText(a);let L=b/2;"center"===F?L=(g-w.width)/2:"right"===F&&(L=g-w.width-b/2);let S=1.3*o;const R=l*c;"center"===v&&"center"===h?S=(n-R)/2:"bottom"===v&&(S=n-R-o/2);const U=((l-s.length)/2+s.length-1)*c+c+S;let T="";if(t?("type"===e&&(T=this.animationType(u,a,u,f,L,U,!1)),"fade"===e&&this.animationFade(a,f,L,U),"slide"===e&&this.animationSlide(a,f,p,L,U,"x"),"append"===e&&this.animationSlide(a,f,p,L,U,"y")):this.fillText(y,a,L,U),!m)switch(e){case"type":{const e=" "===T||f>=1;this.newState={authorFullyRendered:!t||u>a.length,authorFrame:e?u+1:u,authorFrameOpacity:e?d:f+d,authorLastRenderedLetter:T};break}case"fade":this.newState={authorFullyRendered:!t||f>1,authorFrame:f>=1?u+1:u,authorFrameOpacity:f>=1?d:f+d};break;case"slide":case"append":this.newState={authorFullyRendered:!t||p>=1,authorFrame:p>=1?u+1:u,authorFrameOpacity:f>=1?1:f+d,authorFramePosition:p>=1?0:p+x}}}),i(this,"render",()=>{const{image:t,textFullyRendered:e}=this.state;if(!t)return Promise.all([this.loadImage(),this.loadText()]).then(()=>{this.render()}).catch(t=>{console.error(t)}),void(this.renderStartedAt=Date.now());this.renderImage(),this.renderText(),this.renderOverlay(),e&&this.renderAuthor(),this.postRender()}),i(this,"postRender",()=>{const{textEffect:t,textFullyRendered:e,textLastRenderedLetter:n,authorEffect:i,authorFullyRendered:r,authorLastRenderedLetter:o,frameQuality:a}=this.state;if(this.canvasEl&&window.puppeteer&&("type"!==t||""!==n&&" "!==n||"type"!==i||""!==o&&" "!==o)){const t=this.canvasEl.toDataURL("image/jpeg",a);console.log(t)}e&&r?(console.log("Render time: ",(Date.now()-this.renderStartedAt)/1e3),window.puppeteer&&console.log("puppeteer: Finish")):window.puppeteer?this.render():requestAnimationFrame(()=>{this.render()})}),i(this,"rerender",()=>{const t=this.state.textFullyRendered,e=this.state.authorFullyRendered;this.newState={textFullyRendered:!1,textLastRenderedLetter:"",textFrame:1,authorFullyRendered:!1,authorLastRenderedLetter:"",authorFrame:1},t&&e&&(this.renderStartedAt=Date.now(),this.render())}),i(this,"stop",()=>{this.newState={textFullyRendered:!0,authorFullyRendered:!0}}),this.newState=t;let e=t.container;"string"==typeof t.container&&(e=document.querySelector(t.container)),e?(this.canvasEl=document.createElement("canvas"),this.fontRenderEl=document.createElement("div"),this.fontRenderEl.id="canvas-font-renderer",e.appendChild(this.canvasEl),e.appendChild(this.fontRenderEl),this.setCanvasSize()):console.error("Wrong container selector")}set newState(t){Object.keys(t).forEach(e=>{this.state[e]=t[e]})}get context(){return this.canvasEl?this.canvasEl.getContext("2d"):null}}},function(t,e,n){var i=n(4);"string"==typeof i&&(i=[[t.i,i,""]]);var r={hmr:!0,transform:void 0,insertInto:void 0};n(1)(i,r);i.locals&&(t.exports=i.locals)},function(t,e,n){(t.exports=n(0)(!1)).push([t.i,"html, body, form, fieldset, ul, dl, dt, dd, table, td, th, img, menu {\n    margin: 0;\n    padding: 0;\n    border: none;\n}\n\nhtml {\n    height: 100%;\n    width: 100%;\n    font-size: 10px;\n}\n\nbody {\n    background-color: #333;\n}\n\n#canvas-font-renderer {\n    position: absolute;\n    left: 0;\n    top: -1000rem;\n    white-space: nowrap;\n}\n\n.refresh-button {\n    display: block;\n    margin: 30px 0 0 20px;\n    font-size: 30px;\n}\n",""])},function(t,e){t.exports=function(t){var e="undefined"!=typeof window&&window.location;if(!e)throw new Error("fixUrls requires window.location");if(!t||"string"!=typeof t)return t;var n=e.protocol+"//"+e.host,i=n+e.pathname.replace(/\/[^\/]*$/,"/");return t.replace(/url\s*\(((?:[^)(]|\((?:[^)(]+|\([^)(]*\))*\))*)\)/gi,function(t,e){var r,o=e.trim().replace(/^"(.*)"$/,function(t,e){return e}).replace(/^'(.*)'$/,function(t,e){return e});return/^(#|data:|http:\/\/|https:\/\/|file:\/\/\/|\s*$)/i.test(o)?t:(r=0===o.indexOf("//")?o:0===o.indexOf("/")?n+o:i+o.replace(/^\.\//,""),"url("+JSON.stringify(r)+")")})}},function(t,e,n){var i=n(7);"string"==typeof i&&(i=[[t.i,i,""]]);var r={hmr:!0,transform:void 0,insertInto:void 0};n(1)(i,r);i.locals&&(t.exports=i.locals)},function(t,e,n){e=t.exports=n(0)(!1);var i=n(8),r=i(n(9)),o=i(n(10));e.push([t.i,"/* latin */\n@font-face {\n    font-family: 'Kaushan Script';\n    font-style: normal;\n    font-weight: 400;\n    src: url("+r+") format('woff2');\n    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\n}\n@font-face {\n    font-family: 'Nickainley';\n    font-style: normal;\n    font-weight: 400;\n    src: url("+o+") format('ttf');\n    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\n}\n",""])},function(t,e,n){"use strict";t.exports=function(t,e){return"string"!=typeof t?t:(/^['"].*['"]$/.test(t)&&(t=t.slice(1,-1)),/["'() \t\n]/.test(t)||e?'"'+t.replace(/"/g,'\\"').replace(/\n/g,"\\n")+'"':t)}},function(t,e,n){t.exports=n.p+"/fonts/KaushanScript-Regular.woff2"},function(t,e,n){t.exports=n.p+"/fonts/Nickainley.ttf"}]);
+module.exports =
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/*
+  MIT License http://www.opensource.org/licenses/mit-license.php
+  Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+module.exports = function (useSourceMap) {
+  var list = []; // return the list of modules as css string
+
+  list.toString = function toString() {
+    return this.map(function (item) {
+      var content = cssWithMappingToString(item, useSourceMap);
+
+      if (item[2]) {
+        return '@media ' + item[2] + '{' + content + '}';
+      } else {
+        return content;
+      }
+    }).join('');
+  }; // import a list of modules into the list
+
+
+  list.i = function (modules, mediaQuery) {
+    if (typeof modules === 'string') {
+      modules = [[null, modules, '']];
+    }
+
+    var alreadyImportedModules = {};
+
+    for (var i = 0; i < this.length; i++) {
+      var id = this[i][0];
+
+      if (id != null) {
+        alreadyImportedModules[id] = true;
+      }
+    }
+
+    for (i = 0; i < modules.length; i++) {
+      var item = modules[i]; // skip already imported module
+      // this implementation is not 100% perfect for weird media query combinations
+      // when a module is imported multiple times with different media queries.
+      // I hope this will never occur (Hey this way we have smaller bundles)
+
+      if (item[0] == null || !alreadyImportedModules[item[0]]) {
+        if (mediaQuery && !item[2]) {
+          item[2] = mediaQuery;
+        } else if (mediaQuery) {
+          item[2] = '(' + item[2] + ') and (' + mediaQuery + ')';
+        }
+
+        list.push(item);
+      }
+    }
+  };
+
+  return list;
+};
+
+function cssWithMappingToString(item, useSourceMap) {
+  var content = item[1] || '';
+  var cssMapping = item[3];
+
+  if (!cssMapping) {
+    return content;
+  }
+
+  if (useSourceMap && typeof btoa === 'function') {
+    var sourceMapping = toComment(cssMapping);
+    var sourceURLs = cssMapping.sources.map(function (source) {
+      return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */';
+    });
+    return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
+  }
+
+  return [content].join('\n');
+} // Adapted from convert-source-map (MIT)
+
+
+function toComment(sourceMap) {
+  // eslint-disable-next-line no-undef
+  var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
+  var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
+  return '/*# ' + data + ' */';
+}
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+
+var stylesInDom = {};
+
+var	memoize = function (fn) {
+	var memo;
+
+	return function () {
+		if (typeof memo === "undefined") memo = fn.apply(this, arguments);
+		return memo;
+	};
+};
+
+var isOldIE = memoize(function () {
+	// Test for IE <= 9 as proposed by Browserhacks
+	// @see http://browserhacks.com/#hack-e71d8692f65334173fee715c222cb805
+	// Tests for existence of standard globals is to allow style-loader
+	// to operate correctly into non-standard environments
+	// @see https://github.com/webpack-contrib/style-loader/issues/177
+	return window && document && document.all && !window.atob;
+});
+
+var getTarget = function (target, parent) {
+  if (parent){
+    return parent.querySelector(target);
+  }
+  return document.querySelector(target);
+};
+
+var getElement = (function (fn) {
+	var memo = {};
+
+	return function(target, parent) {
+                // If passing function in options, then use it for resolve "head" element.
+                // Useful for Shadow Root style i.e
+                // {
+                //   insertInto: function () { return document.querySelector("#foo").shadowRoot }
+                // }
+                if (typeof target === 'function') {
+                        return target();
+                }
+                if (typeof memo[target] === "undefined") {
+			var styleTarget = getTarget.call(this, target, parent);
+			// Special case to return head of iframe instead of iframe itself
+			if (window.HTMLIFrameElement && styleTarget instanceof window.HTMLIFrameElement) {
+				try {
+					// This will throw an exception if access to iframe is blocked
+					// due to cross-origin restrictions
+					styleTarget = styleTarget.contentDocument.head;
+				} catch(e) {
+					styleTarget = null;
+				}
+			}
+			memo[target] = styleTarget;
+		}
+		return memo[target]
+	};
+})();
+
+var singleton = null;
+var	singletonCounter = 0;
+var	stylesInsertedAtTop = [];
+
+var	fixUrls = __webpack_require__(5);
+
+module.exports = function(list, options) {
+	if (typeof DEBUG !== "undefined" && DEBUG) {
+		if (typeof document !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
+	}
+
+	options = options || {};
+
+	options.attrs = typeof options.attrs === "object" ? options.attrs : {};
+
+	// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+	// tags it will allow on a page
+	if (!options.singleton && typeof options.singleton !== "boolean") options.singleton = isOldIE();
+
+	// By default, add <style> tags to the <head> element
+        if (!options.insertInto) options.insertInto = "head";
+
+	// By default, add <style> tags to the bottom of the target
+	if (!options.insertAt) options.insertAt = "bottom";
+
+	var styles = listToStyles(list, options);
+
+	addStylesToDom(styles, options);
+
+	return function update (newList) {
+		var mayRemove = [];
+
+		for (var i = 0; i < styles.length; i++) {
+			var item = styles[i];
+			var domStyle = stylesInDom[item.id];
+
+			domStyle.refs--;
+			mayRemove.push(domStyle);
+		}
+
+		if(newList) {
+			var newStyles = listToStyles(newList, options);
+			addStylesToDom(newStyles, options);
+		}
+
+		for (var i = 0; i < mayRemove.length; i++) {
+			var domStyle = mayRemove[i];
+
+			if(domStyle.refs === 0) {
+				for (var j = 0; j < domStyle.parts.length; j++) domStyle.parts[j]();
+
+				delete stylesInDom[domStyle.id];
+			}
+		}
+	};
+};
+
+function addStylesToDom (styles, options) {
+	for (var i = 0; i < styles.length; i++) {
+		var item = styles[i];
+		var domStyle = stylesInDom[item.id];
+
+		if(domStyle) {
+			domStyle.refs++;
+
+			for(var j = 0; j < domStyle.parts.length; j++) {
+				domStyle.parts[j](item.parts[j]);
+			}
+
+			for(; j < item.parts.length; j++) {
+				domStyle.parts.push(addStyle(item.parts[j], options));
+			}
+		} else {
+			var parts = [];
+
+			for(var j = 0; j < item.parts.length; j++) {
+				parts.push(addStyle(item.parts[j], options));
+			}
+
+			stylesInDom[item.id] = {id: item.id, refs: 1, parts: parts};
+		}
+	}
+}
+
+function listToStyles (list, options) {
+	var styles = [];
+	var newStyles = {};
+
+	for (var i = 0; i < list.length; i++) {
+		var item = list[i];
+		var id = options.base ? item[0] + options.base : item[0];
+		var css = item[1];
+		var media = item[2];
+		var sourceMap = item[3];
+		var part = {css: css, media: media, sourceMap: sourceMap};
+
+		if(!newStyles[id]) styles.push(newStyles[id] = {id: id, parts: [part]});
+		else newStyles[id].parts.push(part);
+	}
+
+	return styles;
+}
+
+function insertStyleElement (options, style) {
+	var target = getElement(options.insertInto)
+
+	if (!target) {
+		throw new Error("Couldn't find a style target. This probably means that the value for the 'insertInto' parameter is invalid.");
+	}
+
+	var lastStyleElementInsertedAtTop = stylesInsertedAtTop[stylesInsertedAtTop.length - 1];
+
+	if (options.insertAt === "top") {
+		if (!lastStyleElementInsertedAtTop) {
+			target.insertBefore(style, target.firstChild);
+		} else if (lastStyleElementInsertedAtTop.nextSibling) {
+			target.insertBefore(style, lastStyleElementInsertedAtTop.nextSibling);
+		} else {
+			target.appendChild(style);
+		}
+		stylesInsertedAtTop.push(style);
+	} else if (options.insertAt === "bottom") {
+		target.appendChild(style);
+	} else if (typeof options.insertAt === "object" && options.insertAt.before) {
+		var nextSibling = getElement(options.insertAt.before, target);
+		target.insertBefore(style, nextSibling);
+	} else {
+		throw new Error("[Style Loader]\n\n Invalid value for parameter 'insertAt' ('options.insertAt') found.\n Must be 'top', 'bottom', or Object.\n (https://github.com/webpack-contrib/style-loader#insertat)\n");
+	}
+}
+
+function removeStyleElement (style) {
+	if (style.parentNode === null) return false;
+	style.parentNode.removeChild(style);
+
+	var idx = stylesInsertedAtTop.indexOf(style);
+	if(idx >= 0) {
+		stylesInsertedAtTop.splice(idx, 1);
+	}
+}
+
+function createStyleElement (options) {
+	var style = document.createElement("style");
+
+	if(options.attrs.type === undefined) {
+		options.attrs.type = "text/css";
+	}
+
+	if(options.attrs.nonce === undefined) {
+		var nonce = getNonce();
+		if (nonce) {
+			options.attrs.nonce = nonce;
+		}
+	}
+
+	addAttrs(style, options.attrs);
+	insertStyleElement(options, style);
+
+	return style;
+}
+
+function createLinkElement (options) {
+	var link = document.createElement("link");
+
+	if(options.attrs.type === undefined) {
+		options.attrs.type = "text/css";
+	}
+	options.attrs.rel = "stylesheet";
+
+	addAttrs(link, options.attrs);
+	insertStyleElement(options, link);
+
+	return link;
+}
+
+function addAttrs (el, attrs) {
+	Object.keys(attrs).forEach(function (key) {
+		el.setAttribute(key, attrs[key]);
+	});
+}
+
+function getNonce() {
+	if (false) {}
+
+	return __webpack_require__.nc;
+}
+
+function addStyle (obj, options) {
+	var style, update, remove, result;
+
+	// If a transform function was defined, run it on the css
+	if (options.transform && obj.css) {
+	    result = typeof options.transform === 'function'
+		 ? options.transform(obj.css) 
+		 : options.transform.default(obj.css);
+
+	    if (result) {
+	    	// If transform returns a value, use that instead of the original css.
+	    	// This allows running runtime transformations on the css.
+	    	obj.css = result;
+	    } else {
+	    	// If the transform function returns a falsy value, don't add this css.
+	    	// This allows conditional loading of css
+	    	return function() {
+	    		// noop
+	    	};
+	    }
+	}
+
+	if (options.singleton) {
+		var styleIndex = singletonCounter++;
+
+		style = singleton || (singleton = createStyleElement(options));
+
+		update = applyToSingletonTag.bind(null, style, styleIndex, false);
+		remove = applyToSingletonTag.bind(null, style, styleIndex, true);
+
+	} else if (
+		obj.sourceMap &&
+		typeof URL === "function" &&
+		typeof URL.createObjectURL === "function" &&
+		typeof URL.revokeObjectURL === "function" &&
+		typeof Blob === "function" &&
+		typeof btoa === "function"
+	) {
+		style = createLinkElement(options);
+		update = updateLink.bind(null, style, options);
+		remove = function () {
+			removeStyleElement(style);
+
+			if(style.href) URL.revokeObjectURL(style.href);
+		};
+	} else {
+		style = createStyleElement(options);
+		update = applyToTag.bind(null, style);
+		remove = function () {
+			removeStyleElement(style);
+		};
+	}
+
+	update(obj);
+
+	return function updateStyle (newObj) {
+		if (newObj) {
+			if (
+				newObj.css === obj.css &&
+				newObj.media === obj.media &&
+				newObj.sourceMap === obj.sourceMap
+			) {
+				return;
+			}
+
+			update(obj = newObj);
+		} else {
+			remove();
+		}
+	};
+}
+
+var replaceText = (function () {
+	var textStore = [];
+
+	return function (index, replacement) {
+		textStore[index] = replacement;
+
+		return textStore.filter(Boolean).join('\n');
+	};
+})();
+
+function applyToSingletonTag (style, index, remove, obj) {
+	var css = remove ? "" : obj.css;
+
+	if (style.styleSheet) {
+		style.styleSheet.cssText = replaceText(index, css);
+	} else {
+		var cssNode = document.createTextNode(css);
+		var childNodes = style.childNodes;
+
+		if (childNodes[index]) style.removeChild(childNodes[index]);
+
+		if (childNodes.length) {
+			style.insertBefore(cssNode, childNodes[index]);
+		} else {
+			style.appendChild(cssNode);
+		}
+	}
+}
+
+function applyToTag (style, obj) {
+	var css = obj.css;
+	var media = obj.media;
+
+	if(media) {
+		style.setAttribute("media", media)
+	}
+
+	if(style.styleSheet) {
+		style.styleSheet.cssText = css;
+	} else {
+		while(style.firstChild) {
+			style.removeChild(style.firstChild);
+		}
+
+		style.appendChild(document.createTextNode(css));
+	}
+}
+
+function updateLink (link, options, obj) {
+	var css = obj.css;
+	var sourceMap = obj.sourceMap;
+
+	/*
+		If convertToAbsoluteUrls isn't defined, but sourcemaps are enabled
+		and there is no publicPath defined then lets turn convertToAbsoluteUrls
+		on by default.  Otherwise default to the convertToAbsoluteUrls option
+		directly
+	*/
+	var autoFixUrls = options.convertToAbsoluteUrls === undefined && sourceMap;
+
+	if (options.convertToAbsoluteUrls || autoFixUrls) {
+		css = fixUrls(css);
+	}
+
+	if (sourceMap) {
+		// http://stackoverflow.com/a/26603875
+		css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + " */";
+	}
+
+	var blob = new Blob([css], { type: "text/css" });
+
+	var oldSrc = link.href;
+
+	link.href = URL.createObjectURL(blob);
+
+	if(oldSrc) URL.revokeObjectURL(oldSrc);
+}
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _css_base_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3);
+/* harmony import */ var _css_base_css__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_css_base_css__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _css_fonts_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6);
+/* harmony import */ var _css_fonts_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_css_fonts_css__WEBPACK_IMPORTED_MODULE_1__);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+var remapValue = function remapValue(value, inMin, inMax, outMin, outMax) {
+  if (value < inMin) {
+    return outMin;
+  }
+
+  if (value > inMax) {
+    return outMax;
+  }
+
+  return (value - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
+};
+
+function hexToRgbA(hex, opacity) {
+  var c;
+  c = hex.substring(1).split('');
+
+  if (c.length === 3) {
+    c = [c[0], c[0], c[1], c[1], c[2], c[2]];
+  }
+
+  c = "0x4".concat(c.join(''));
+  return "rgba(".concat([c >> 16 & 255, c >> 8 & 255, c & 255].join(','), ", ").concat(opacity, ")");
+}
+
+var Renderer =
+/*#__PURE__*/
+function () {
+  function Renderer(props) {
+    var _this = this;
+
+    _classCallCheck(this, Renderer);
+
+    _defineProperty(this, "canvasEl", void 0);
+
+    _defineProperty(this, "fontRenderEl", void 0);
+
+    _defineProperty(this, "renderStartedAt", void 0);
+
+    _defineProperty(this, "state", {
+      canvasWidth: 600,
+      canvasHeight: 600,
+      // image
+      image: null,
+      imageURL: '',
+      // text
+      text: '',
+      textLines: [],
+      textLettersFade: [],
+      maxTextLines: 0,
+      textFontFamily: 'Kaushan Script',
+      textFontSize: 12,
+      // in rem
+      textFontLineHeight: 0,
+      // in px
+      textEffect: 'fade',
+      // type | fade lines | fade letters | slide lines | append lines | fade
+      textFullyRendered: false,
+      textLastRenderedLetter: '',
+      textFrame: 1,
+      textFrameOpacity: 0.1,
+      textFrameOpacityStep: 0.1,
+      textLettersOpacity: 0,
+      textLettersOpacityStep: 0.05,
+      textFramePosition: 0,
+      textFramePositionStep: 0.1,
+      textAlign: 'right',
+      // left | center | right
+      textVerticalAlign: 'top',
+      // top | center | bottom
+      // author
+      author: '',
+      authorLines: [],
+      authorFontFamily: 'Nickainley',
+      authorFontSize: 6,
+      authorFontLineHeight: 0,
+      authorEffect: 'fade',
+      // type | slide | append | fade
+      authorFullyRendered: false,
+      authorLastRenderedLetter: '',
+      authorFrame: 1,
+      authorFrameOpacity: 0.1,
+      authorFrameOpacityStep: 0.1,
+      authorFramePosition: 0,
+      authorFramePositionStep: 0.1,
+      authorAlign: 'left',
+      // left | center | right
+      authorVerticalAlign: 'bottom',
+      // top | center | bottom
+      // common
+      animate: true,
+      frameQuality: 0.93,
+      overlay: 'border',
+      // solid | lines | border
+      marginTop: 300,
+      // in px
+      marginLeft: 50,
+      // in px
+      color: '#FFF'
+    });
+
+    _defineProperty(this, "setCanvasSize", function () {
+      var _this$state = _this.state,
+          canvasWidth = _this$state.canvasWidth,
+          canvasHeight = _this$state.canvasHeight;
+
+      if (_this.canvasEl) {
+        _this.canvasEl.width = canvasWidth;
+        _this.canvasEl.height = canvasHeight;
+      }
+    });
+
+    _defineProperty(this, "loadImage", function () {
+      return new Promise(function (resolve, reject) {
+        var imageURL = _this.state.imageURL;
+        var imageObj = new Image();
+
+        imageObj.onload = function () {
+          _this.newState = {
+            image: imageObj
+          };
+          resolve();
+        };
+
+        imageObj.onerror = function (err) {
+          reject(err);
+        };
+
+        imageObj.src = imageURL;
+      });
+    });
+
+    _defineProperty(this, "renderImage", function () {
+      if (!_this.context) {
+        return;
+      }
+
+      var _this$state2 = _this.state,
+          image = _this$state2.image,
+          canvasWidth = _this$state2.canvasWidth,
+          canvasHeight = _this$state2.canvasHeight;
+
+      if (image) {
+        var w = image.width;
+        var h = image.height;
+        var x;
+        var y;
+        var ratio = w / h;
+
+        if (w > h) {
+          h = canvasHeight;
+          w = canvasHeight * ratio;
+          y = 0;
+          x = -((w - canvasWidth) / 2);
+        } else {
+          w = canvasWidth;
+          h = canvasWidth / ratio;
+          x = 0;
+          y = -((h - canvasHeight) / 2);
+        }
+
+        _this.context.drawImage(image, x, y, w, h);
+      }
+    });
+
+    _defineProperty(this, "renderOverlay", function () {
+      if (!_this.context) {
+        return;
+      }
+
+      var _this$state3 = _this.state,
+          overlay = _this$state3.overlay,
+          canvasWidth = _this$state3.canvasWidth,
+          canvasHeight = _this$state3.canvasHeight,
+          marginLeft = _this$state3.marginLeft,
+          color = _this$state3.color;
+      _this.context.shadowOffsetX = 0;
+      _this.context.shadowOffsetY = 0;
+      _this.context.shadowColor = 0;
+      _this.context.shadowBlur = 0;
+
+      if (overlay === 'solid') {
+        _this.context.fillStyle = hexToRgbA('#000', 0.5);
+
+        _this.context.fillRect(marginLeft / 2, marginLeft / 2, canvasWidth - marginLeft, canvasHeight - marginLeft);
+      }
+
+      if (overlay === 'border') {
+        _this.context.lineWidth = 4;
+        _this.context.strokeStyle = color;
+
+        _this.context.rect(marginLeft / 2, marginLeft / 2, canvasWidth - marginLeft, canvasHeight - marginLeft);
+
+        _this.context.stroke();
+      }
+
+      if (overlay === 'lines') {
+        _this.context.lineWidth = 4;
+        _this.context.strokeStyle = color;
+
+        _this.context.beginPath();
+
+        _this.context.moveTo(marginLeft / 2, marginLeft / 2);
+
+        _this.context.lineTo(canvasWidth - marginLeft / 2, marginLeft / 2);
+
+        _this.context.stroke();
+
+        _this.context.beginPath();
+
+        _this.context.moveTo(marginLeft / 2, canvasHeight - marginLeft / 2);
+
+        _this.context.lineTo(canvasWidth - marginLeft / 2, canvasHeight - marginLeft / 2);
+
+        _this.context.stroke();
+      }
+    });
+
+    _defineProperty(this, "getFont", function (fontSize, fontFamily) {
+      return "".concat(fontSize, "rem \"").concat(fontFamily, "\"");
+    });
+
+    _defineProperty(this, "getFontProps", function (text, fontFamily, fontSize) {
+      var splitToLines = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
+
+      if (!_this.fontRenderEl || !_this.context) {
+        return {};
+      }
+
+      var _this$state4 = _this.state,
+          marginTop = _this$state4.marginTop,
+          marginLeft = _this$state4.marginLeft,
+          canvasWidth = _this$state4.canvasWidth,
+          canvasHeight = _this$state4.canvasHeight;
+
+      var font = _this.getFont(fontSize, fontFamily);
+
+      _this.context.font = font;
+      _this.fontRenderEl.style.font = font;
+      _this.fontRenderEl.innerText = text;
+      var fontH = _this.fontRenderEl.offsetHeight;
+      var fontLineHeight = fontH + fontH * 0.2;
+      var maxTextLines = Math.floor((canvasHeight - marginTop) / fontLineHeight);
+
+      if (splitToLines) {
+        var textLines = [];
+        var line = '';
+        var words = text.split(' ');
+        words.forEach(function (word, index) {
+          var lineMetrics = _this.context.measureText("".concat(line, " ").concat(word));
+
+          if (lineMetrics.width > canvasWidth - marginLeft) {
+            textLines.push(line);
+            line = word;
+          } else {
+            line += line === '' ? word : " ".concat(word);
+          }
+
+          if (index === words.length - 1) {
+            textLines.push(line);
+          }
+        });
+
+        if (textLines.length > maxTextLines) {
+          return _this.getFontProps(text, fontFamily, fontSize - 1, splitToLines);
+        }
+
+        return {
+          fontSize: fontSize,
+          fontLineHeight: fontLineHeight,
+          maxTextLines: maxTextLines,
+          textLines: textLines
+        };
+      }
+
+      var lineMetrics = _this.context.measureText(text);
+
+      if (lineMetrics.width > canvasWidth - marginLeft) {
+        return _this.getFontProps(text, fontFamily, fontSize - 1, splitToLines);
+      }
+
+      return {
+        fontSize: fontSize,
+        fontLineHeight: fontLineHeight
+      };
+    });
+
+    _defineProperty(this, "loadText", function () {
+      return new Promise(function (resolve) {
+        if (!_this.context) {
+          return;
+        }
+
+        var _this$state5 = _this.state,
+            textFontFamily = _this$state5.textFontFamily,
+            textFontSize = _this$state5.textFontSize,
+            authorFontFamily = _this$state5.authorFontFamily,
+            authorFontSize = _this$state5.authorFontSize;
+
+        var text = _this.state.text.trim();
+
+        var author = _this.state.author.trim();
+
+        _this.context.textBaseline = 'middle';
+
+        var textProps = _this.getFontProps(text, textFontFamily, textFontSize);
+
+        var textLettersFade = [];
+        textProps.textLines.forEach(function (line) {
+          var step = Math.ceil(line.length / (Math.random() * (15 - 10) + 10));
+          var fadeLettersIndex = [];
+
+          for (var i = 0, l = line.length; i < l; i += step) {
+            fadeLettersIndex.push(i);
+          }
+
+          textLettersFade.push(fadeLettersIndex);
+        });
+
+        var authorProps = _this.getFontProps(author, authorFontFamily, authorFontSize, false);
+
+        _this.newState = {
+          text: text,
+          textLettersFade: textLettersFade,
+          textFontSize: textProps.fontSize,
+          textFontLineHeight: textProps.fontLineHeight,
+          maxTextLines: textProps.maxTextLines,
+          textLines: textProps.textLines,
+          author: author,
+          authorFontSize: authorProps.fontSize,
+          authorFontLineHeight: authorProps.fontLineHeight
+        };
+        resolve();
+      });
+    });
+
+    _defineProperty(this, "fillText", function (color, text, x, y) {
+      var shadow = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : true;
+
+      if (!_this.context) {
+        return;
+      }
+
+      _this.context.fillStyle = color;
+
+      if (shadow) {
+        _this.context.shadowOffsetX = 3;
+        _this.context.shadowOffsetY = 3;
+        _this.context.shadowColor = hexToRgbA('#000', 0.3);
+        _this.context.shadowBlur = 4;
+      }
+
+      _this.context.fillText(text, x, y);
+    });
+
+    _defineProperty(this, "animationType", function (frame, line, renderedLettersCount, frameOpacity, x, y) {
+      var multiline = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : true;
+
+      if (!_this.context) {
+        return '';
+      }
+
+      var color = _this.state.color;
+      var lastRenderedLetter;
+
+      if (frame > renderedLettersCount + line.length) {
+        _this.fillText(color, line, x, y);
+      } else {
+        var letterIndex = frame;
+
+        if (multiline) {
+          letterIndex = frame - renderedLettersCount;
+        }
+
+        var currentText = line.substr(0, letterIndex - 1);
+
+        if (currentText.length) {
+          _this.fillText(color, currentText, x, y);
+        }
+
+        var lineMetrics = _this.context.measureText(currentText);
+
+        lastRenderedLetter = line.substr(letterIndex - 1, 1);
+
+        _this.fillText(hexToRgbA(color, frameOpacity), lastRenderedLetter, x + lineMetrics.width, y, false);
+      }
+
+      return lastRenderedLetter;
+    });
+
+    _defineProperty(this, "animationFade", function (line, frameOpacity, x, y) {
+      if (!_this.context) {
+        return;
+      }
+
+      var color = _this.state.color;
+
+      _this.fillText(hexToRgbA(color, frameOpacity), line, x, y);
+    });
+
+    _defineProperty(this, "animationFadeLine", function (frame, line, lineCount, frameOpacity, x, y) {
+      if (!_this.context) {
+        return;
+      }
+
+      var color = _this.state.color;
+
+      if (frame - 1 > lineCount) {
+        _this.fillText(color, line, x, y);
+      }
+
+      if (frame - 1 === lineCount) {
+        _this.animationFade(line, frameOpacity, x, y);
+      }
+    });
+
+    _defineProperty(this, "animationSlide", function (line, frameOpacity, framePosition, x, y, direction) {
+      if (!_this.context) {
+        return;
+      }
+
+      var _this$state6 = _this.state,
+          color = _this$state6.color,
+          marginLeft = _this$state6.marginLeft;
+      var margin = remapValue(framePosition, 0, 1, marginLeft, 0);
+      var targetX = x;
+      var targetY = y;
+
+      if (direction === 'x') {
+        targetX = x - margin;
+      } else {
+        targetY = y - margin;
+      }
+
+      _this.fillText(hexToRgbA(color, frameOpacity), line, targetX, targetY);
+    });
+
+    _defineProperty(this, "animationSlideLine", function (frame, line, lineCount, frameOpacity, framePosition, x, y, direction) {
+      if (!_this.context) {
+        return;
+      }
+
+      var color = _this.state.color;
+
+      if (frame - 1 > lineCount) {
+        _this.fillText(color, line, x, y);
+      }
+
+      if (frame - 1 === lineCount) {
+        _this.animationSlide(line, frameOpacity, framePosition, x, y, direction);
+      }
+    });
+
+    _defineProperty(this, "renderText", function () {
+      if (!_this.context) {
+        return;
+      }
+
+      var _this$state7 = _this.state,
+          animate = _this$state7.animate,
+          textEffect = _this$state7.textEffect,
+          textFontSize = _this$state7.textFontSize,
+          textFontFamily = _this$state7.textFontFamily,
+          textFontLineHeight = _this$state7.textFontLineHeight,
+          textLines = _this$state7.textLines,
+          maxTextLines = _this$state7.maxTextLines,
+          textLettersFade = _this$state7.textLettersFade,
+          textFrame = _this$state7.textFrame,
+          textFrameOpacity = _this$state7.textFrameOpacity,
+          textFrameOpacityStep = _this$state7.textFrameOpacityStep,
+          textLettersOpacity = _this$state7.textLettersOpacity,
+          textLettersOpacityStep = _this$state7.textLettersOpacityStep,
+          textFramePosition = _this$state7.textFramePosition,
+          textFramePositionStep = _this$state7.textFramePositionStep,
+          textFullyRendered = _this$state7.textFullyRendered,
+          authorFontLineHeight = _this$state7.authorFontLineHeight,
+          canvasWidth = _this$state7.canvasWidth,
+          canvasHeight = _this$state7.canvasHeight,
+          color = _this$state7.color,
+          textAlign = _this$state7.textAlign,
+          textVerticalAlign = _this$state7.textVerticalAlign,
+          authorVerticalAlign = _this$state7.authorVerticalAlign,
+          marginLeft = _this$state7.marginLeft;
+      _this.context.font = _this.getFont(textFontSize, textFontFamily);
+      var j = 0;
+      var renderedLettersCount = 0;
+      var lastRenderedLetter = '';
+
+      for (var i = (maxTextLines - textLines.length) / 2, l = i + textLines.length; i < l; i++) {
+        var line = textLines[j];
+
+        var lineMetrics = _this.context.measureText(line);
+
+        var x = marginLeft / 2;
+
+        if (textAlign === 'center') {
+          x = (canvasWidth - lineMetrics.width) / 2;
+        } else if (textAlign === 'right') {
+          x = canvasWidth - lineMetrics.width - marginLeft / 2;
+        }
+
+        var yMargin = remapValue(textFontLineHeight, 40, 150, 30, 0);
+        var maxHeightArea = maxTextLines * textFontLineHeight;
+
+        if (textVerticalAlign === 'center') {
+          yMargin = (canvasHeight - maxHeightArea) / 2;
+        } else if (textVerticalAlign === 'bottom') {
+          yMargin = canvasHeight - maxHeightArea - authorFontLineHeight / 2;
+        }
+
+        var y = i * textFontLineHeight + textFontLineHeight / 2 + yMargin;
+
+        if ((textVerticalAlign === 'center' || textVerticalAlign === 'bottom') && textVerticalAlign === authorVerticalAlign) {
+          y -= authorFontLineHeight;
+        }
+
+        if (animate) {
+          if (textEffect === 'type') {
+            lastRenderedLetter = _this.animationType(textFrame, line, renderedLettersCount, textFrameOpacity, x, y);
+
+            if (lastRenderedLetter) {
+              break;
+            }
+          }
+
+          if (textEffect === 'fade lines') {
+            _this.animationFadeLine(textFrame, line, j, textFrameOpacity, x, y);
+
+            if (textFrame - 1 === j) {
+              break;
+            }
+          }
+
+          if (textEffect === 'fade letters') {
+            var lineLettersFade = textLettersFade[j];
+
+            for (var t = 1, tl = line.length; t <= tl; t++) {
+              var prevLetters = _this.context.measureText(line.substr(0, t - 1));
+
+              var currentLetter = line.substr(t - 1, 1);
+              var letterColor = void 0;
+
+              if (lineLettersFade.includes(t)) {
+                letterColor = hexToRgbA(color, textLettersOpacity);
+              } else {
+                letterColor = hexToRgbA(color, textFrameOpacity);
+              }
+
+              _this.fillText(letterColor, currentLetter, x + prevLetters.width, y);
+            }
+          }
+
+          if (textEffect === 'fade') {
+            _this.animationFade(line, textFrameOpacity, x, y);
+          }
+
+          if (textEffect === 'slide lines') {
+            _this.animationSlideLine(textFrame, line, j, textFrameOpacity, textFramePosition, x, y, 'x');
+          }
+
+          if (textEffect === 'append lines') {
+            _this.animationSlideLine(textFrame, line, j, textFrameOpacity, textFramePosition, x, y, 'y');
+          }
+        } else {
+          _this.fillText(color, line, x, y);
+        }
+
+        renderedLettersCount += line.length;
+        j++;
+      }
+
+      if (textFullyRendered) {
+        return;
+      }
+
+      switch (textEffect) {
+        case 'type':
+          {
+            var totalLettersCount = textLines.reduce(function (accumulator, currentValue) {
+              return accumulator + currentValue.length;
+            }, 0);
+            var emptyLetterOrOpacityIsFull = lastRenderedLetter === ' ' || textFrameOpacity >= 1;
+            _this.newState = {
+              textFullyRendered: animate ? renderedLettersCount === totalLettersCount : true,
+              textFrame: emptyLetterOrOpacityIsFull ? textFrame + 1 : textFrame,
+              textFrameOpacity: emptyLetterOrOpacityIsFull ? textFrameOpacityStep : textFrameOpacity + textFrameOpacityStep,
+              textLastRenderedLetter: lastRenderedLetter
+            };
+            break;
+          }
+
+        case 'fade lines':
+          _this.newState = {
+            textFullyRendered: animate ? textFrame > textLines.length : true,
+            textFrame: textFrameOpacity >= 1 ? textFrame + 1 : textFrame,
+            textFrameOpacity: textFrameOpacity >= 1 ? textFrameOpacityStep : textFrameOpacity + textFrameOpacityStep
+          };
+          break;
+
+        case 'fade letters':
+          _this.newState = {
+            textFullyRendered: animate ? textLettersOpacity === 1 : true,
+            textFrame: textLettersOpacity >= 1 ? textFrame + 1 : textFrame,
+            textFrameOpacity: textFrameOpacity >= 1 ? 1 : textFrameOpacity + textFrameOpacityStep,
+            textLettersOpacity: textLettersOpacity >= 1 ? 1 : textLettersOpacity + textLettersOpacityStep
+          };
+          break;
+
+        case 'fade':
+          _this.newState = {
+            textFullyRendered: animate ? textFrameOpacity === 1 : true,
+            textFrame: textFrameOpacity >= 1 ? textFrame + 1 : textFrame,
+            textFrameOpacity: textFrameOpacity >= 1 ? 1 : textFrameOpacity + textFrameOpacityStep
+          };
+          break;
+
+        case 'slide lines':
+        case 'append lines':
+          _this.newState = {
+            textFullyRendered: animate ? textFrame > textLines.length : true,
+            textFrame: textFramePosition >= 1 ? textFrame + 1 : textFrame,
+            textFrameOpacity: textFrameOpacity >= 1 ? textFrameOpacityStep : textFrameOpacity + textFrameOpacityStep,
+            textFramePosition: textFramePosition >= 1 ? 0 : Number((textFramePosition + textFramePositionStep).toFixed(1))
+          };
+          break;
+
+        default:
+      }
+    });
+
+    _defineProperty(this, "renderAuthor", function () {
+      if (!_this.context) {
+        return;
+      }
+
+      var _this$state8 = _this.state,
+          animate = _this$state8.animate,
+          authorEffect = _this$state8.authorEffect,
+          canvasHeight = _this$state8.canvasHeight,
+          authorFontSize = _this$state8.authorFontSize,
+          authorFontFamily = _this$state8.authorFontFamily,
+          authorFontLineHeight = _this$state8.authorFontLineHeight,
+          author = _this$state8.author,
+          textLines = _this$state8.textLines,
+          maxTextLines = _this$state8.maxTextLines,
+          textFontLineHeight = _this$state8.textFontLineHeight,
+          textVerticalAlign = _this$state8.textVerticalAlign,
+          authorFrame = _this$state8.authorFrame,
+          authorFrameOpacity = _this$state8.authorFrameOpacity,
+          authorFrameOpacityStep = _this$state8.authorFrameOpacityStep,
+          authorFramePosition = _this$state8.authorFramePosition,
+          authorFramePositionStep = _this$state8.authorFramePositionStep,
+          authorFullyRendered = _this$state8.authorFullyRendered,
+          canvasWidth = _this$state8.canvasWidth,
+          color = _this$state8.color,
+          authorAlign = _this$state8.authorAlign,
+          authorVerticalAlign = _this$state8.authorVerticalAlign,
+          marginLeft = _this$state8.marginLeft;
+      _this.context.font = _this.getFont(authorFontSize, authorFontFamily);
+
+      var lineMetrics = _this.context.measureText(author);
+
+      var x = marginLeft / 2;
+
+      if (authorAlign === 'center') {
+        x = (canvasWidth - lineMetrics.width) / 2;
+      } else if (authorAlign === 'right') {
+        x = canvasWidth - lineMetrics.width - marginLeft / 2;
+      }
+
+      var textFirstLine = (maxTextLines - textLines.length) / 2;
+      var textLastLine = textFirstLine + textLines.length - 1;
+      var yMargin = authorFontLineHeight * 1.3;
+      var maxHeightArea = maxTextLines * textFontLineHeight;
+
+      if (authorVerticalAlign === 'center' && textVerticalAlign === 'center') {
+        yMargin = (canvasHeight - maxHeightArea) / 2;
+      } else if (authorVerticalAlign === 'bottom') {
+        yMargin = canvasHeight - maxHeightArea - authorFontLineHeight / 2;
+      }
+
+      var y = textLastLine * textFontLineHeight + textFontLineHeight + yMargin;
+      var lastRenderedLetter = '';
+
+      if (animate) {
+        if (authorEffect === 'type') {
+          lastRenderedLetter = _this.animationType(authorFrame, author, authorFrame, authorFrameOpacity, x, y, false);
+        }
+
+        if (authorEffect === 'fade') {
+          _this.animationFade(author, authorFrameOpacity, x, y);
+        }
+
+        if (authorEffect === 'slide') {
+          _this.animationSlide(author, authorFrameOpacity, authorFramePosition, x, y, 'x');
+        }
+
+        if (authorEffect === 'append') {
+          _this.animationSlide(author, authorFrameOpacity, authorFramePosition, x, y, 'y');
+        }
+      } else {
+        _this.fillText(color, author, x, y);
+      }
+
+      if (authorFullyRendered) {
+        return;
+      }
+
+      switch (authorEffect) {
+        case 'type':
+          {
+            var emptyLetterOrOpacityIsFull = lastRenderedLetter === ' ' || authorFrameOpacity >= 1;
+            _this.newState = {
+              authorFullyRendered: animate ? authorFrame > author.length : true,
+              authorFrame: emptyLetterOrOpacityIsFull ? authorFrame + 1 : authorFrame,
+              authorFrameOpacity: emptyLetterOrOpacityIsFull ? authorFrameOpacityStep : authorFrameOpacity + authorFrameOpacityStep,
+              authorLastRenderedLetter: lastRenderedLetter
+            };
+            break;
+          }
+
+        case 'fade':
+          _this.newState = {
+            authorFullyRendered: animate ? authorFrameOpacity > 1 : true,
+            authorFrame: authorFrameOpacity >= 1 ? authorFrame + 1 : authorFrame,
+            authorFrameOpacity: authorFrameOpacity >= 1 ? authorFrameOpacityStep : authorFrameOpacity + authorFrameOpacityStep
+          };
+          break;
+
+        case 'slide':
+        case 'append':
+          _this.newState = {
+            authorFullyRendered: animate ? authorFramePosition >= 1 : true,
+            authorFrame: authorFramePosition >= 1 ? authorFrame + 1 : authorFrame,
+            authorFrameOpacity: authorFrameOpacity >= 1 ? 1 : authorFrameOpacity + authorFrameOpacityStep,
+            authorFramePosition: authorFramePosition >= 1 ? 0 : authorFramePosition + authorFramePositionStep
+          };
+          break;
+
+        default:
+      }
+    });
+
+    _defineProperty(this, "render", function () {
+      var _this$state9 = _this.state,
+          image = _this$state9.image,
+          textFullyRendered = _this$state9.textFullyRendered;
+
+      if (!image) {
+        Promise.all([_this.loadImage(), _this.loadText()]).then(function () {
+          _this.render();
+        }).catch(function (err) {
+          console.error(err); // eslint-disable-line
+        });
+        _this.renderStartedAt = Date.now();
+        return;
+      }
+
+      _this.renderImage();
+
+      _this.renderText();
+
+      _this.renderOverlay();
+
+      if (textFullyRendered) {
+        _this.renderAuthor();
+      }
+
+      _this.postRender();
+    });
+
+    _defineProperty(this, "postRender", function () {
+      var _this$state10 = _this.state,
+          textEffect = _this$state10.textEffect,
+          textFullyRendered = _this$state10.textFullyRendered,
+          textLastRenderedLetter = _this$state10.textLastRenderedLetter,
+          authorEffect = _this$state10.authorEffect,
+          authorFullyRendered = _this$state10.authorFullyRendered,
+          authorLastRenderedLetter = _this$state10.authorLastRenderedLetter,
+          frameQuality = _this$state10.frameQuality;
+
+      if (_this.canvasEl && window.puppeteer && (textEffect !== 'type' || textLastRenderedLetter !== '' && textLastRenderedLetter !== ' ' || authorEffect !== 'type' || authorLastRenderedLetter !== '' && authorLastRenderedLetter !== ' ')) {
+        var imgdata = _this.canvasEl.toDataURL('image/jpeg', frameQuality);
+
+        console.log(imgdata); // eslint-disable-line
+      }
+
+      if (!textFullyRendered || !authorFullyRendered) {
+        if (window.puppeteer) {
+          _this.render();
+        } else {
+          requestAnimationFrame(function () {
+            // setTimeout(() => {
+            _this.render();
+          }); // }, 200);
+        }
+      } else {
+        console.log('Render time: ', (Date.now() - _this.renderStartedAt) / 1000); // eslint-disable-line
+
+        if (window.puppeteer) {
+          console.log('puppeteer: Finish'); // eslint-disable-line
+        }
+      }
+    });
+
+    _defineProperty(this, "rerender", function () {
+      var textFullyRendered = _this.state.textFullyRendered;
+      var authorFullyRendered = _this.state.authorFullyRendered;
+      _this.newState = {
+        textFullyRendered: false,
+        textLastRenderedLetter: '',
+        textFrame: 1,
+        authorFullyRendered: false,
+        authorLastRenderedLetter: '',
+        authorFrame: 1
+      };
+
+      if (textFullyRendered && authorFullyRendered) {
+        _this.renderStartedAt = Date.now();
+
+        _this.render();
+      }
+    });
+
+    _defineProperty(this, "stop", function () {
+      _this.newState = {
+        textFullyRendered: true,
+        authorFullyRendered: true
+      };
+    });
+
+    this.newState = props;
+    var container = props.container;
+
+    if (typeof props.container === 'string') {
+      container = document.querySelector(props.container);
+    }
+
+    if (!container) {
+      console.error('Wrong container selector'); // eslint-disable-line
+
+      return;
+    }
+
+    this.canvasEl = document.createElement('canvas');
+    this.fontRenderEl = document.createElement('div');
+    this.fontRenderEl.id = 'canvas-font-renderer';
+    container.appendChild(this.canvasEl);
+    container.appendChild(this.fontRenderEl);
+    this.setCanvasSize();
+  }
+
+  _createClass(Renderer, [{
+    key: "newState",
+    set: function set(props) {
+      var _this2 = this;
+
+      Object.keys(props).forEach(function (item) {
+        _this2.state[item] = props[item];
+      });
+    }
+  }, {
+    key: "context",
+    get: function get() {
+      if (this.canvasEl) {
+        return this.canvasEl.getContext('2d');
+      }
+
+      return null;
+    }
+  }]);
+
+  return Renderer;
+}();
+
+/* harmony default export */ __webpack_exports__["default"] = (Renderer);
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(4);
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(1)(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(false);
+// Module
+exports.push([module.i, "html, body, form, fieldset, ul, dl, dt, dd, table, td, th, img, menu {\n    margin: 0;\n    padding: 0;\n    border: none;\n}\n\nhtml {\n    height: 100%;\n    width: 100%;\n    font-size: 10px;\n}\n\nbody {\n    background-color: #333;\n}\n\n#canvas-font-renderer {\n    position: absolute;\n    left: 0;\n    top: -1000rem;\n    white-space: nowrap;\n}\n\n.refresh-button {\n    display: block;\n    margin: 30px 0 0 20px;\n    font-size: 30px;\n}\n", ""]);
+
+
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports) {
+
+
+/**
+ * When source maps are enabled, `style-loader` uses a link element with a data-uri to
+ * embed the css on the page. This breaks all relative urls because now they are relative to a
+ * bundle instead of the current page.
+ *
+ * One solution is to only use full urls, but that may be impossible.
+ *
+ * Instead, this function "fixes" the relative urls to be absolute according to the current page location.
+ *
+ * A rudimentary test suite is located at `test/fixUrls.js` and can be run via the `npm test` command.
+ *
+ */
+
+module.exports = function (css) {
+  // get current location
+  var location = typeof window !== "undefined" && window.location;
+
+  if (!location) {
+    throw new Error("fixUrls requires window.location");
+  }
+
+	// blank or null?
+	if (!css || typeof css !== "string") {
+	  return css;
+  }
+
+  var baseUrl = location.protocol + "//" + location.host;
+  var currentDir = baseUrl + location.pathname.replace(/\/[^\/]*$/, "/");
+
+	// convert each url(...)
+	/*
+	This regular expression is just a way to recursively match brackets within
+	a string.
+
+	 /url\s*\(  = Match on the word "url" with any whitespace after it and then a parens
+	   (  = Start a capturing group
+	     (?:  = Start a non-capturing group
+	         [^)(]  = Match anything that isn't a parentheses
+	         |  = OR
+	         \(  = Match a start parentheses
+	             (?:  = Start another non-capturing groups
+	                 [^)(]+  = Match anything that isn't a parentheses
+	                 |  = OR
+	                 \(  = Match a start parentheses
+	                     [^)(]*  = Match anything that isn't a parentheses
+	                 \)  = Match a end parentheses
+	             )  = End Group
+              *\) = Match anything and then a close parens
+          )  = Close non-capturing group
+          *  = Match anything
+       )  = Close capturing group
+	 \)  = Match a close parens
+
+	 /gi  = Get all matches, not the first.  Be case insensitive.
+	 */
+	var fixedCss = css.replace(/url\s*\(((?:[^)(]|\((?:[^)(]+|\([^)(]*\))*\))*)\)/gi, function(fullMatch, origUrl) {
+		// strip quotes (if they exist)
+		var unquotedOrigUrl = origUrl
+			.trim()
+			.replace(/^"(.*)"$/, function(o, $1){ return $1; })
+			.replace(/^'(.*)'$/, function(o, $1){ return $1; });
+
+		// already a full url? no change
+		if (/^(#|data:|http:\/\/|https:\/\/|file:\/\/\/|\s*$)/i.test(unquotedOrigUrl)) {
+		  return fullMatch;
+		}
+
+		// convert the url to a full url
+		var newUrl;
+
+		if (unquotedOrigUrl.indexOf("//") === 0) {
+		  	//TODO: should we add protocol?
+			newUrl = unquotedOrigUrl;
+		} else if (unquotedOrigUrl.indexOf("/") === 0) {
+			// path should be relative to the base url
+			newUrl = baseUrl + unquotedOrigUrl; // already starts with '/'
+		} else {
+			// path should be relative to current directory
+			newUrl = currentDir + unquotedOrigUrl.replace(/^\.\//, ""); // Strip leading './'
+		}
+
+		// send back the fixed url(...)
+		return "url(" + JSON.stringify(newUrl) + ")";
+	});
+
+	// send back the fixed css
+	return fixedCss;
+};
+
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(7);
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(1)(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(false);
+// Imports
+var urlEscape = __webpack_require__(8);
+var ___CSS_LOADER_URL___0___ = urlEscape(__webpack_require__(9));
+var ___CSS_LOADER_URL___1___ = urlEscape(__webpack_require__(10));
+
+// Module
+exports.push([module.i, "/* latin */\n@font-face {\n    font-family: 'Kaushan Script';\n    font-style: normal;\n    font-weight: 400;\n    src: url(" + ___CSS_LOADER_URL___0___ + ") format('woff2');\n    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\n}\n@font-face {\n    font-family: 'Nickainley';\n    font-style: normal;\n    font-weight: 400;\n    src: url(" + ___CSS_LOADER_URL___1___ + ") format('ttf');\n    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\n}\n", ""]);
+
+
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function escape(url, needQuotes) {
+  if (typeof url !== 'string') {
+    return url;
+  } // If url is already wrapped in quotes, remove them
+
+
+  if (/^['"].*['"]$/.test(url)) {
+    url = url.slice(1, -1);
+  } // Should url be wrapped?
+  // See https://drafts.csswg.org/css-values-3/#urls
+
+
+  if (/["'() \t\n]/.test(url) || needQuotes) {
+    return '"' + url.replace(/"/g, '\\"').replace(/\n/g, '\\n') + '"';
+  }
+
+  return url;
+};
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "/fonts/KaushanScript-Regular.woff2";
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "/fonts/Nickainley.ttf";
+
+/***/ })
+/******/ ]);
