@@ -1,4 +1,5 @@
 
+import './css/base.css';
 import './css/fonts.css';
 
 const remapValue = (value, inMin, inMax, outMin, outMax) => {
@@ -40,7 +41,8 @@ class Renderer {
 
         this.canvasEl = document.createElement('canvas');
         this.fontRenderEl = document.createElement('div');
-        this.fontRenderEl.id = 'canvas-font-renderer';
+        this.fontRenderEl.id = 'image-renderer-font-container';
+        container.style.fontSize = '10px';
         container.appendChild(this.canvasEl);
         container.appendChild(this.fontRenderEl);
 

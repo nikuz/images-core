@@ -1,24 +1,5 @@
-html, body, form, fieldset, ul, dl, dt, dd, table, td, th, img, menu {
-    margin: 0;
-    padding: 0;
-    border: none;
-}
-
-html {
-    height: 100%;
-    width: 100%;
-    font-size: 10px;
-}
-
 body {
     background-color: #333;
-}
-
-#canvas-font-renderer {
-    position: absolute;
-    left: 0;
-    top: -1000rem;
-    white-space: nowrap;
 }
 
 .refresh-button {

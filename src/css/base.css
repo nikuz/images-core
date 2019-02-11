@@ -1,0 +1,6 @@
+#image-renderer-font-container {
+    position: absolute;
+    left: 0;
+    top: -1000rem;
+    white-space: nowrap;
+}
