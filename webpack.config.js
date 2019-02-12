@@ -26,9 +26,7 @@ if (isProduction) {
     devtool = false;
 } else {
     plugins.push(
-        new webpack.HotModuleReplacementPlugin()
-    );
-    plugins.push(
+        new webpack.HotModuleReplacementPlugin(),
         new HtmlWebpackPlugin({
             filename: 'index.html',
             template: indexPath,

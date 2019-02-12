@@ -10,6 +10,8 @@ const windowSet = (page, name, value) => page.evaluateOnNewDocument(`
 `);
 
 (async () => {
+    const startTime = Date.now();
+
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
     await page.setViewport({
@@ -21,8 +23,6 @@ const windowSet = (page, name, value) => page.evaluateOnNewDocument(`
     await page.title().then(title => {
         console.log(title);
     });
-
-    const startTime = Date.now();
 
     let frame = 1;
     const base64Reg = /^data:image\/(jpeg|png);base64,/;

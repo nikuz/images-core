@@ -1,6 +1,5 @@
 
 import './css/base.css';
-import './css/fonts.css';
 
 const remapValue = (value, inMin, inMax, outMin, outMax) => {
     if (value < inMin) {
@@ -29,6 +28,9 @@ function hexToRgbA(hex, opacity) {
 class Renderer {
     constructor(props) {
         this.newState = props;
+
+        this.loadFonts(this.state.textFontFamily);
+        this.loadFonts(this.state.authorFontFamily);
 
         let container = props.container;
         if (typeof props.container === 'string') {
@@ -66,7 +68,7 @@ class Renderer {
         textLines: [],
         textLettersFade: [],
         maxTextLines: 0,
-        textFontFamily: 'Kaushan Script',
+        textFontFamily: 'Kaushan',
         textFontSize: 12, // in rem
         textFontLineHeight: 0, // in px
         textEffect: 'fade', // type | fade lines | fade letters | slide lines | append lines | fade
@@ -111,6 +113,41 @@ class Renderer {
             this.state[item] = props[item];
         });
     }
+
+    loadFonts = (fontFamily) => {
+        switch (fontFamily) {
+            case 'Kaushan':
+                return require('./css/kaushan.css');
+            case 'NickAinley':
+                return require('./css/nickainley.css');
+            case 'Courgette':
+                return require('./css/courgette.css');
+            case 'Exo':
+                return require('./css/exo.css');
+            case 'GreatVibes':
+                return require('./css/greatvibes.css');
+            case 'Guerilla':
+                return require('./css/guerilla.css');
+            case 'Lato':
+                return require('./css/lato.css');
+            case 'Lobster':
+                return require('./css/lobster.css');
+            case 'MyUnderwood':
+                return require('./css/myunderwood.css');
+            case 'Sensei':
+                return require('./css/sensei.css');
+            case 'Sports':
+                return require('./css/sports.css');
+            case 'Tahoma':
+                return require('./css/tahoma.css');
+            case 'Typograph':
+                return require('./css/typograph.css');
+            case 'YellowTail':
+                return require('./css/yellowtail.css');
+            default:
+                return null;
+        }
+    };
 
     setCanvasSize = () => {
         const {
@@ -567,13 +604,13 @@ class Renderer {
                         break;
                     }
                 }
-                if (textEffect === 'fade lines') {
+                if (textEffect === 'fade-lines') {
                     this.animationFadeLine(textFrame, line, j, textFrameOpacity, x, y);
                     if (textFrame - 1 === j) {
                         break;
                     }
                 }
-                if (textEffect === 'fade letters') {
+                if (textEffect === 'fade-letters') {
                     const lineLettersFade = textLettersFade[j];
 
                     for (let t = 1, tl = line.length; t <= tl; t++) {
@@ -591,7 +628,7 @@ class Renderer {
                 if (textEffect === 'fade') {
                     this.animationFade(line, textFrameOpacity, x, y);
                 }
-                if (textEffect === 'slide lines') {
+                if (textEffect === 'slide-lines') {
                     this.animationSlideLine(
                         textFrame,
                         line,
@@ -603,7 +640,7 @@ class Renderer {
                         'x'
                     );
                 }
-                if (textEffect === 'append lines') {
+                if (textEffect === 'append-lines') {
                     this.animationSlideLine(
                         textFrame,
                         line,
@@ -648,7 +685,7 @@ class Renderer {
                 };
                 break;
             }
-            case 'fade lines':
+            case 'fade-lines':
                 this.newState = {
                     textFullyRendered: animate
                         ? textFrame > textLines.length
@@ -661,7 +698,7 @@ class Renderer {
                         : textFrameOpacity + textFrameOpacityStep,
                 };
                 break;
-            case 'fade letters':
+            case 'fade-letters':
                 this.newState = {
                     textFullyRendered: animate
                         ? textLettersOpacity === 1
@@ -690,8 +727,8 @@ class Renderer {
                         : textFrameOpacity + textFrameOpacityStep,
                 };
                 break;
-            case 'slide lines':
-            case 'append lines':
+            case 'slide-lines':
+            case 'append-lines':
                 this.newState = {
                     textFullyRendered: animate
                         ? textFrame > textLines.length
@@ -847,6 +884,7 @@ class Renderer {
         const {
             image,
             textFullyRendered,
+            animate,
         } = this.state;
 
         if (!image) {
@@ -862,7 +900,7 @@ class Renderer {
         this.renderImage();
         this.renderText();
         this.renderOverlay();
-        if (textFullyRendered) {
+        if (textFullyRendered || !animate) {
             this.renderAuthor();
         }
         this.postRender();
