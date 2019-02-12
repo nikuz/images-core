@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // common
         animate: false,
         frameQuality: 0.93,
-        overlay: 'border', // solid | lines | border
+        overlay: 'solid', // solid | lines | border
         color: '#FFF',
     });
     image.render();

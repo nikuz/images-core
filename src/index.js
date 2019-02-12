@@ -885,6 +885,7 @@ class Renderer {
             image,
             textFullyRendered,
             animate,
+            overlay,
         } = this.state;
 
         if (!image) {
@@ -898,8 +899,13 @@ class Renderer {
         }
 
         this.renderImage();
+        if (overlay === 'solid') {
+            this.renderOverlay();
+        }
         this.renderText();
-        this.renderOverlay();
+        if (overlay !== 'solid') {
+            this.renderOverlay();
+        }
         if (textFullyRendered || !animate) {
             this.renderAuthor();
         }
