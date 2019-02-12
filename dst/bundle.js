@@ -1419,7 +1419,8 @@ function () {
       var _this$state9 = _this.state,
           image = _this$state9.image,
           textFullyRendered = _this$state9.textFullyRendered,
-          animate = _this$state9.animate;
+          animate = _this$state9.animate,
+          overlay = _this$state9.overlay;
 
       if (!image) {
         Promise.all([_this.loadImage(), _this.loadText()]).then(function () {
@@ -1433,9 +1434,15 @@ function () {
 
       _this.renderImage();
 
+      if (overlay === 'solid') {
+        _this.renderOverlay();
+      }
+
       _this.renderText();
 
-      _this.renderOverlay();
+      if (overlay !== 'solid') {
+        _this.renderOverlay();
+      }
 
       if (textFullyRendered || !animate) {
         _this.renderAuthor();
