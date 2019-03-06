@@ -10,20 +10,20 @@ document.addEventListener('DOMContentLoaded', () => {
         imageURL: '/graphics/001.jpeg',
         // text
         text: 'Specify the color of the box to write. For the general syntax of this option',
-        textFontFamily: 'Kaushan',
+        textFontFamily: 'Exo',
         textEffect: 'append-lines', // type | fade lines | fade letters | slide lines | append lines | fade
         textAlign: 'right', // left | center | right
-        textVerticalAlign: 'top', // top | center | bottom
+        textVerticalAlign: 'center', // top | center | bottom
         // author
         author: 'William Longgood',
         authorFontFamily: 'Lobster',
         authorEffect: 'fade', // type | slide | append | fade
-        authorAlign: 'left', // left | center | right
-        authorVerticalAlign: 'bottom', // top | center | bottom
+        authorAlign: 'right', // left | center | right
+        authorVerticalAlign: '', // stick | bottom
         // common
-        animate: false,
+        animate: true,
         frameQuality: 0.93,
-        overlay: 'solid', // solid | lines | border
+        overlay: 'lines', // solid | lines | border
         color: '#FFF',
     });
     image.render();

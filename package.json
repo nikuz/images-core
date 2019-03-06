@@ -1,6 +1,6 @@
 {
-  "name": "@nikuz/images-renderer",
-  "version": "0.0.4",
+  "name": "@nikuz/images-core",
+  "version": "0.0.5",
   "description": "",
   "files": [
     "dst"
@@ -8,12 +8,13 @@
   "main": "dst/bundle.js",
   "scripts": {
     "start": "NODE_ENV=development webpack-dev-server",
+    "prebuild": "npm run eslint",
     "build": "NODE_ENV=production webpack",
     "eslint": "eslint ./webpack.config.js ./src ./test -f table",
     "resize": "convert ./src/public/graphics/002.jpg -resize 1080x1080^ -gravity center -crop 1080x1080+0+0 -blur 0x8 ./src/public/graphics/output.jpg",
     "puppeteer": "node runner.js",
     "create-video": "ffmpeg -i %03d.jpeg -final_delay 500 out.gif",
-    "create-gif": "rm -rf ./dst/out && mkdir ./dst/out && npm run resize && npm run puppeteer && ffmpeg -framerate 20 -i ./dst/out/%03d.jpeg -final_delay 500 ./dst/out/out.gif"
+    "create-gif": "rm -rf ./dst/out && mkdir ./dst/out && npm run puppeteer && ffmpeg -framerate 40 -i ./dst/out/%03d.jpeg -final_delay 500 ./dst/out/out.gif"
   },
   "author": "Nikolai Kuznetcov",
   "license": "ISC",

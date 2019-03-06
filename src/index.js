@@ -1,6 +1,4 @@
 
-import './css/base.css';
-
 const remapValue = (value, inMin, inMax, outMin, outMax) => {
     if (value < inMin) {
         return outMin;
@@ -27,7 +25,13 @@ function hexToRgbA(hex, opacity) {
 
 class Renderer {
     constructor(props) {
-        this.newState = props;
+        this.newState = {
+            ...props,
+            textFontSize: props.width / 15,
+            authorFontSize: props.width / 15,
+            marginVertical: props.height / 5,
+            marginHorizontal: props.height / 9,
+        };
 
         this.loadFonts(this.state.textFontFamily);
         this.loadFonts(this.state.authorFontFamily);
@@ -42,24 +46,22 @@ class Renderer {
         }
 
         this.canvasEl = document.createElement('canvas');
-        this.fontRenderEl = document.createElement('div');
-        this.fontRenderEl.id = 'image-renderer-font-container';
-        container.style.fontSize = '10px';
         container.appendChild(this.canvasEl);
-        container.appendChild(this.fontRenderEl);
+
+        this.context.font = this.getFont(this.state.textFontSize, this.state.textFontFamily);
 
         this.setCanvasSize();
+
+        this.preloadFontsIntoScope();
     }
 
     canvasEl;
 
-    fontRenderEl;
-
     renderStartedAt;
 
     state = {
-        canvasWidth: 600,
-        canvasHeight: 600,
+        width: 600,
+        height: 600,
         // image
         image: null,
         imageURL: '',
@@ -69,8 +71,9 @@ class Renderer {
         textLettersFade: [],
         maxTextLines: 0,
         textFontFamily: 'Kaushan',
-        textFontSize: 12, // in rem
+        textFontSize: 12, // in px
         textFontLineHeight: 0, // in px
+        textFontLoaded: false,
         textEffect: 'fade', // type | fade lines | fade letters | slide lines | append lines | fade
         textFullyRendered: false,
         textLastRenderedLetter: '',
@@ -89,6 +92,7 @@ class Renderer {
         authorFontFamily: 'Nickainley',
         authorFontSize: 6,
         authorFontLineHeight: 0,
+        authorFontLoaded: false,
         authorEffect: 'fade', // type | slide | append | fade
         authorFullyRendered: false,
         authorLastRenderedLetter: '',
@@ -98,13 +102,13 @@ class Renderer {
         authorFramePosition: 0,
         authorFramePositionStep: 0.1,
         authorAlign: 'left', // left | center | right
-        authorVerticalAlign: 'bottom', // top | center | bottom
+        authorVerticalAlign: '', // stick | bottom
         // common
         animate: true,
         frameQuality: 0.93,
         overlay: 'border', // solid | lines | border
-        marginTop: 300, // in px
-        marginLeft: 50, // in px
+        marginVertical: 100, // in px
+        marginHorizontal: 50, // in px
         color: '#FFF',
     };
 
@@ -149,15 +153,60 @@ class Renderer {
         }
     };
 
+    preloadFontsIntoScope = () => {
+        const {
+            textFontSize,
+            textFontFamily,
+            authorFontSize,
+            authorFontFamily,
+        } = this.state;
+
+        const fonts = [{
+            id: 'text',
+            fontSize: textFontSize,
+            font: this.getFont(textFontSize, textFontFamily),
+            stateProp: 'textFontLoaded',
+        }, {
+            id: 'author',
+            fontSize: authorFontSize,
+            font: this.getFont(authorFontSize, authorFontFamily),
+            stateProp: 'authorFontLoaded',
+        }];
+
+        fonts.forEach((fontItem) => {
+            const el = document.createElement('span');
+            el.innerText = 'Some text';
+            el.style.position = 'absolute';
+            el.style.top = '-9999px';
+            el.style.left = '-9999px';
+            el.style.fontSize = `${fontItem.fontSize}px`;
+            document.body.appendChild(el);
+            const fallbackFontWidth = el.offsetWidth;
+            el.style.font = fontItem.font;
+
+            const checkFontLoad = () => {
+                const loadedFontWidth = el.offsetWidth;
+                if (fallbackFontWidth === loadedFontWidth) {
+                    setTimeout(checkFontLoad, 10);
+                } else {
+                    this.newState = {
+                        [fontItem.stateProp]: true,
+                    };
+                }
+            };
+            checkFontLoad();
+        });
+    };
+
     setCanvasSize = () => {
         const {
-            canvasWidth,
-            canvasHeight,
+            width,
+            height,
         } = this.state;
 
         if (this.canvasEl) {
-            this.canvasEl.width = canvasWidth;
-            this.canvasEl.height = canvasHeight;
+            this.canvasEl.width = width;
+            this.canvasEl.height = height;
         }
     };
 
@@ -167,6 +216,41 @@ class Renderer {
         }
 
         return null;
+    }
+
+    get marginHorizontal() {
+        const { overlay } = this.state;
+        const { marginHorizontal } = this.state;
+
+        if (overlay === 'solid' || overlay === 'border') {
+            return marginHorizontal * 2;
+        }
+
+        return marginHorizontal;
+    }
+
+    get textLinesIndexes() {
+        const {
+            textVerticalAlign,
+            maxTextLines,
+            textLines,
+        } = this.state;
+
+        let first = 0;
+        switch (textVerticalAlign) {
+            case 'center':
+                first = (maxTextLines - textLines.length) / 2;
+                break;
+            case 'bottom':
+                first = maxTextLines - textLines.length;
+                break;
+            default:
+        }
+
+        return {
+            first,
+            last: first + textLines.length,
+        };
     }
 
     loadImage = () => (
@@ -193,8 +277,8 @@ class Renderer {
 
         const {
             image,
-            canvasWidth,
-            canvasHeight,
+            width,
+            height,
         } = this.state;
 
         if (image) {
@@ -204,15 +288,15 @@ class Renderer {
             let y;
             const ratio = w / h;
             if (w > h) {
-                h = canvasHeight;
-                w = canvasHeight * ratio;
+                h = height;
+                w = height * ratio;
                 y = 0;
-                x = -((w - canvasWidth) / 2);
+                x = -((w - width) / 2);
             } else {
-                w = canvasWidth;
-                h = canvasWidth / ratio;
+                w = width;
+                h = width / ratio;
                 x = 0;
-                y = -((h - canvasHeight) / 2);
+                y = -((h - height) / 2);
             }
 
             this.context.drawImage(image, x, y, w, h);
@@ -226,9 +310,9 @@ class Renderer {
 
         const {
             overlay,
-            canvasWidth,
-            canvasHeight,
-            marginLeft,
+            width,
+            height,
+            marginHorizontal,
             color,
         } = this.state;
 
@@ -240,20 +324,21 @@ class Renderer {
         if (overlay === 'solid') {
             this.context.fillStyle = hexToRgbA('#000', 0.5);
             this.context.fillRect(
-                marginLeft / 2,
-                marginLeft / 2,
-                canvasWidth - marginLeft,
-                canvasHeight - marginLeft
+                marginHorizontal / 2,
+                marginHorizontal / 2,
+                width - marginHorizontal,
+                height - marginHorizontal
             );
         }
         if (overlay === 'border') {
+            this.context.beginPath();
             this.context.lineWidth = 4;
             this.context.strokeStyle = color;
             this.context.rect(
-                marginLeft / 2,
-                marginLeft / 2,
-                canvasWidth - marginLeft,
-                canvasHeight - marginLeft
+                marginHorizontal / 2,
+                marginHorizontal / 2,
+                width - marginHorizontal,
+                height - marginHorizontal
             );
             this.context.stroke();
         }
@@ -262,40 +347,39 @@ class Renderer {
             this.context.strokeStyle = color;
 
             this.context.beginPath();
-            this.context.moveTo(marginLeft / 2, marginLeft / 2);
-            this.context.lineTo(canvasWidth - (marginLeft / 2), marginLeft / 2);
+            this.context.moveTo(marginHorizontal / 2, marginHorizontal / 2);
+            this.context.lineTo(width - (marginHorizontal / 2), marginHorizontal / 2);
             this.context.stroke();
 
             this.context.beginPath();
-            this.context.moveTo(marginLeft / 2, canvasHeight - (marginLeft / 2));
-            this.context.lineTo(canvasWidth - (marginLeft / 2), canvasHeight - (marginLeft / 2));
+            this.context.moveTo(marginHorizontal / 2, height - (marginHorizontal / 2));
+            this.context.lineTo(width - (marginHorizontal / 2), height - (marginHorizontal / 2));
             this.context.stroke();
         }
     };
 
     getFont = (fontSize, fontFamily) => (
-        `${fontSize}rem "${fontFamily}"`
+        `${fontSize}px "${fontFamily}"`
     );
 
-    getFontProps = (text, fontFamily, fontSize, splitToLines = true) => {
-        if (!this.fontRenderEl || !this.context) {
+    getFontProps = (text, fontFamily, fontSize, splitToLines = true, additionalMargin = 0) => {
+        if (!this.context) {
             return {};
         }
 
         const {
-            marginTop,
-            marginLeft,
-            canvasWidth,
-            canvasHeight,
+            width,
+            height,
+            marginVertical,
         } = this.state;
+        const { marginHorizontal } = this;
 
         const font = this.getFont(fontSize, fontFamily);
         this.context.font = font;
-        this.fontRenderEl.style.font = font;
-        this.fontRenderEl.innerText = text;
-        const fontH = this.fontRenderEl.offsetHeight;
-        const fontLineHeight = fontH + (fontH * 0.2);
-        const maxTextLines = Math.floor((canvasHeight - marginTop) / fontLineHeight);
+        const fontLineHeight = fontSize * 1.5;
+        const availableHeight = height - marginVertical;
+        const maxTextLines = Math.floor(availableHeight / fontLineHeight);
+        const maxDrawTextLines = Math.floor((availableHeight - additionalMargin) / fontLineHeight);
 
         if (splitToLines) {
             const textLines = [];
@@ -303,7 +387,7 @@ class Renderer {
             const words = text.split(' ');
             words.forEach((word, index) => {
                 const lineMetrics = this.context.measureText(`${line} ${word}`);
-                if (lineMetrics.width > canvasWidth - marginLeft) {
+                if (lineMetrics.width > width - marginHorizontal) {
                     textLines.push(line);
                     line = word;
                 } else {
@@ -315,8 +399,14 @@ class Renderer {
                 }
             });
 
-            if (textLines.length > maxTextLines) {
-                return this.getFontProps(text, fontFamily, fontSize - 1, splitToLines);
+            if (textLines.length > maxDrawTextLines) {
+                return this.getFontProps(
+                    text,
+                    fontFamily,
+                    fontSize - 1,
+                    splitToLines,
+                    additionalMargin
+                );
             }
 
             return {
@@ -328,7 +418,7 @@ class Renderer {
         }
 
         const lineMetrics = this.context.measureText(text);
-        if (lineMetrics.width > canvasWidth - marginLeft) {
+        if (lineMetrics.width > width - marginHorizontal) {
             return this.getFontProps(text, fontFamily, fontSize - 1, splitToLines);
         }
 
@@ -355,7 +445,15 @@ class Renderer {
 
             this.context.textBaseline = 'middle';
 
-            const textProps = this.getFontProps(text, textFontFamily, textFontSize);
+            const authorProps = this.getFontProps(author, authorFontFamily, authorFontSize, false);
+
+            const textProps = this.getFontProps(
+                text,
+                textFontFamily,
+                textFontSize,
+                true,
+                authorProps.fontLineHeight * 1.5
+            );
             const textLettersFade = [];
 
             textProps.textLines.forEach((line) => {
@@ -366,8 +464,6 @@ class Renderer {
                 }
                 textLettersFade.push(fadeLettersIndex);
             });
-
-            const authorProps = this.getFontProps(author, authorFontFamily, authorFontSize, false);
 
             this.newState = {
                 text,
@@ -489,12 +585,10 @@ class Renderer {
             return;
         }
 
-        const {
-            color,
-            marginLeft,
-        } = this.state;
+        const { color } = this.state;
+        const { marginHorizontal } = this;
 
-        const margin = remapValue(framePosition, 0, 1, marginLeft, 0);
+        const margin = remapValue(framePosition, 0, 1, marginHorizontal, 0);
         let targetX = x;
         let targetY = y;
         if (direction === 'x') {
@@ -551,44 +645,58 @@ class Renderer {
             textFramePosition,
             textFramePositionStep,
             textFullyRendered,
-            authorFontLineHeight,
-            canvasWidth,
-            canvasHeight,
-            color,
-            textAlign,
             textVerticalAlign,
             authorVerticalAlign,
-            marginLeft,
+            authorFontLineHeight,
+            width,
+            color,
+            textAlign,
+            marginVertical,
         } = this.state;
+        const { marginHorizontal } = this;
 
         this.context.font = this.getFont(textFontSize, textFontFamily);
+
+        if (process.env.NODE_ENV !== 'production') {
+            this.context.shadowOffsetX = 0;
+            this.context.shadowOffsetY = 0;
+            this.context.shadowColor = 0;
+            this.context.shadowBlur = 0;
+            for (let j = 0, l = maxTextLines; j < l; j++) {
+                this.context.beginPath();
+                this.context.strokeStyle = 'red';
+                this.context.rect(
+                    0,
+                    j * textFontLineHeight + (marginVertical / 2),
+                    width,
+                    textFontLineHeight
+                );
+                this.context.stroke();
+            }
+        }
 
         let j = 0;
         let renderedLettersCount = 0;
         let lastRenderedLetter = '';
-        for (let i = (maxTextLines - textLines.length) / 2, l = i + textLines.length; i < l; i++) {
+        const textLinesIndexes = this.textLinesIndexes;
+        for (let i = textLinesIndexes.first; i < textLinesIndexes.last; i++) {
             const line = textLines[j];
             const lineMetrics = this.context.measureText(line);
-            let x = marginLeft / 2;
+            let x = marginHorizontal / 2;
             if (textAlign === 'center') {
-                x = (canvasWidth - lineMetrics.width) / 2;
+                x = (width - lineMetrics.width) / 2;
             } else if (textAlign === 'right') {
-                x = canvasWidth - lineMetrics.width - (marginLeft / 2);
+                x = width - lineMetrics.width - (marginHorizontal / 2);
             }
-            let yMargin = remapValue(textFontLineHeight, 40, 150, 30, 0);
-            const maxHeightArea = maxTextLines * textFontLineHeight;
-            if (textVerticalAlign === 'center') {
-                yMargin = (canvasHeight - maxHeightArea) / 2;
-            } else if (textVerticalAlign === 'bottom') {
-                yMargin = canvasHeight - maxHeightArea - (authorFontLineHeight / 2);
+            let yMargin = 0;
+            if (authorVerticalAlign !== 'bottom' && textVerticalAlign !== 'top') {
+                yMargin = authorFontLineHeight * 0.7;
             }
-            let y = (i * textFontLineHeight) + (textFontLineHeight / 2) + yMargin;
-            if (
-                (textVerticalAlign === 'center' || textVerticalAlign === 'bottom')
-                && textVerticalAlign === authorVerticalAlign
-            ) {
-                y -= authorFontLineHeight;
+            if (textVerticalAlign === 'bottom') {
+                yMargin = authorFontLineHeight * 1.7;
             }
+            const lineHeight = (i * textFontLineHeight) + (textFontLineHeight / 2);
+            const y = lineHeight + (marginVertical / 2) - yMargin;
 
             if (animate) {
                 if (textEffect === 'type') {
@@ -654,6 +762,22 @@ class Renderer {
                 }
             } else {
                 this.fillText(color, line, x, y);
+            }
+
+            if (process.env.NODE_ENV !== 'production') {
+                this.context.shadowOffsetX = 0;
+                this.context.shadowOffsetY = 0;
+                this.context.shadowColor = 0;
+                this.context.shadowBlur = 0;
+                this.context.beginPath();
+                this.context.strokeStyle = 'blue';
+                this.context.rect(
+                    x,
+                    y - (textFontLineHeight / 2),
+                    this.context.measureText(line).width,
+                    textFontLineHeight
+                );
+                this.context.stroke();
             }
 
             renderedLettersCount += line.length;
@@ -755,48 +879,46 @@ class Renderer {
 
         const {
             animate,
-            authorEffect,
-            canvasHeight,
-            authorFontSize,
-            authorFontFamily,
-            authorFontLineHeight,
-            author,
-            textLines,
-            maxTextLines,
             textFontLineHeight,
             textVerticalAlign,
+            authorEffect,
+            authorFontSize,
+            authorFontFamily,
+            author,
             authorFrame,
             authorFrameOpacity,
             authorFrameOpacityStep,
             authorFramePosition,
             authorFramePositionStep,
             authorFullyRendered,
-            canvasWidth,
+            authorFontLineHeight,
+            width,
+            height,
             color,
             authorAlign,
             authorVerticalAlign,
-            marginLeft,
         } = this.state;
+        const { marginHorizontal } = this;
 
         this.context.font = this.getFont(authorFontSize, authorFontFamily);
 
         const lineMetrics = this.context.measureText(author);
-        let x = marginLeft / 2;
+        let x = marginHorizontal / 2;
         if (authorAlign === 'center') {
-            x = (canvasWidth - lineMetrics.width) / 2;
+            x = (width - lineMetrics.width) / 2;
         } else if (authorAlign === 'right') {
-            x = canvasWidth - lineMetrics.width - (marginLeft / 2);
+            x = width - lineMetrics.width - (marginHorizontal / 2);
         }
-        const textFirstLine = (maxTextLines - textLines.length) / 2;
-        const textLastLine = textFirstLine + textLines.length - 1;
-        let yMargin = authorFontLineHeight * 1.3;
-        const maxHeightArea = maxTextLines * textFontLineHeight;
-        if (authorVerticalAlign === 'center' && textVerticalAlign === 'center') {
-            yMargin = (canvasHeight - maxHeightArea) / 2;
-        } else if (authorVerticalAlign === 'bottom') {
-            yMargin = canvasHeight - maxHeightArea - (authorFontLineHeight / 2);
+
+        const textLinesIndexes = this.textLinesIndexes;
+        let yMargin = textFontLineHeight * 0.7;
+        if (textVerticalAlign === 'top') {
+            yMargin *= 2;
         }
-        const y = (textLastLine * textFontLineHeight) + textFontLineHeight + yMargin;
+        let y = (textLinesIndexes.last * textFontLineHeight) + (textFontLineHeight / 2) + yMargin;
+        if (authorVerticalAlign === 'bottom' || textVerticalAlign === 'bottom') {
+            y = height - (this.state.marginHorizontal / 2) - authorFontLineHeight;
+        }
 
         let lastRenderedLetter = '';
         if (animate) {
@@ -886,7 +1008,16 @@ class Renderer {
             textFullyRendered,
             animate,
             overlay,
+            width,
+            height,
+            textFontLoaded,
+            authorFontLoaded,
         } = this.state;
+
+        if (!textFontLoaded || !authorFontLoaded) {
+            setTimeout(this.render, 10);
+            return;
+        }
 
         if (!image) {
             Promise.all([this.loadImage(), this.loadText()]).then(() => {
@@ -898,6 +1029,7 @@ class Renderer {
             return;
         }
 
+        this.context.clearRect(0, 0, width, height);
         this.renderImage();
         if (overlay === 'solid') {
             this.renderOverlay();
