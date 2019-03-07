@@ -1024,6 +1024,7 @@ class Renderer {
                 this.render();
             }).catch((err) => {
                 console.error(err); // eslint-disable-line
+                console.log('puppeteer: Error'); // eslint-disable-line
             });
             this.renderStartedAt = Date.now();
             return;

@@ -1479,6 +1479,8 @@ function () {
           _this.render();
         }).catch(function (err) {
           console.error(err); // eslint-disable-line
+
+          console.log('puppeteer: Error'); // eslint-disable-line
         });
         _this.renderStartedAt = Date.now();
         return;
