@@ -1229,7 +1229,7 @@ function () {
         }
 
         if (textVerticalAlign === 'bottom') {
-          yMargin = authorFontLineHeight * 1.7;
+          yMargin = authorFontLineHeight * 1.4;
         }
 
         var lineHeight = i * textFontLineHeight + textFontLineHeight / 2;
@@ -1393,16 +1393,16 @@ function () {
       }
 
       var textLinesIndexes = _this.textLinesIndexes;
-      var yMargin = textFontLineHeight * 0.1;
+      var yMargin = 0;
 
       if (textVerticalAlign === 'top') {
-        yMargin = textFontLineHeight * 0.8;
+        yMargin = authorFontLineHeight * 0.6;
       }
 
       var y = textLinesIndexes.last * textFontLineHeight + textFontLineHeight / 2 + yMargin;
 
       if (authorVerticalAlign === 'bottom' || textVerticalAlign === 'bottom') {
-        y = height - _this.state.marginHorizontal / 2 - authorFontLineHeight * 1.2;
+        y = height - _this.state.marginHorizontal / 2 - authorFontLineHeight * 1.3;
       }
 
       switch (separator) {
@@ -1524,10 +1524,10 @@ function () {
       }
 
       var textLinesIndexes = _this.textLinesIndexes;
-      var yMargin = textFontLineHeight * 0.7;
+      var yMargin = authorFontLineHeight * 0.6;
 
       if (textVerticalAlign === 'top') {
-        yMargin *= 2;
+        yMargin = authorFontLineHeight * 1.2;
       }
 
       var y = textLinesIndexes.last * textFontLineHeight + textFontLineHeight / 2 + yMargin;
@@ -1713,8 +1713,8 @@ function () {
     });
 
     this.newState = _objectSpread({}, props, {
-      textFontSize: props.width / 15,
-      authorFontSize: props.width / 15,
+      textFontSize: props.width / 10,
+      authorFontSize: props.width / 10,
       marginVertical: props.height / 5,
       marginHorizontal: props.height / 9,
       textFrameOpacity: props.textEffect === 'type' ? 0.5 : 0.1,

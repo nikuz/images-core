@@ -9,8 +9,8 @@ document.addEventListener('DOMContentLoaded', () => {
         height: 600,
         imageURL: '/graphics/001.jpg',
         // text
-        text: 'Specify the color of the box to write. For the general syntax of this option',
-        textFontFamily: 'Exo',
+        text: 'There is no elevator to success, you have to take the stairs. There is no elevator to success, you have to take the stairs.',
+        textFontFamily: 'Courgette',
         textEffect: 'append-lines', // type | fade-lines | fade-letters | slide-lines | append-lines | fade
         textAlign: 'right', // left | center | right
         textVerticalAlign: 'center', // top | center | bottom
@@ -23,9 +23,10 @@ document.addEventListener('DOMContentLoaded', () => {
         // common
         animate: true,
         frameQuality: 0.93,
-        overlay: 'lines', // solid | lines | border
-        separator: 'dot', // line | dash | dot
+        overlay: 'solid', // solid | lines | border
+        separator: 'line', // line | dash | dot
         color: '#FFF',
+        debug: false,
     });
     image.render();
 

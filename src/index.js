@@ -27,8 +27,8 @@ class Renderer {
     constructor(props) {
         this.newState = {
             ...props,
-            textFontSize: props.width / 15,
-            authorFontSize: props.width / 15,
+            textFontSize: props.width / 10,
+            authorFontSize: props.width / 10,
             marginVertical: props.height / 5,
             marginHorizontal: props.height / 9,
             textFrameOpacity: props.textEffect === 'type' ? 0.5 : 0.1,
@@ -665,13 +665,14 @@ class Renderer {
 
         this.context.font = this.getFont(textFontSize, textFontFamily);
 
-        if (process.env.NODE_ENV !== 'production') {
+        if (process.env.NODE_ENV !== 'production' && this.state.debug) {
             this.context.shadowOffsetX = 0;
             this.context.shadowOffsetY = 0;
             this.context.shadowColor = 0;
             this.context.shadowBlur = 0;
             for (let j = 0, l = maxTextLines; j < l; j++) {
                 this.context.beginPath();
+                this.context.lineWidth = 1;
                 this.context.strokeStyle = 'red';
                 this.context.rect(
                     0,
@@ -701,7 +702,7 @@ class Renderer {
                 yMargin = authorFontLineHeight * 0.7;
             }
             if (textVerticalAlign === 'bottom') {
-                yMargin = authorFontLineHeight * 1.7;
+                yMargin = authorFontLineHeight * 1.4;
             }
             const lineHeight = (i * textFontLineHeight) + (textFontLineHeight / 2);
             const y = lineHeight + (marginVertical / 2) - yMargin;
@@ -772,12 +773,13 @@ class Renderer {
                 this.fillText(color, line, x, y);
             }
 
-            if (process.env.NODE_ENV !== 'production') {
+            if (process.env.NODE_ENV !== 'production' && this.state.debug) {
                 this.context.shadowOffsetX = 0;
                 this.context.shadowOffsetY = 0;
                 this.context.shadowColor = 0;
                 this.context.shadowBlur = 0;
                 this.context.beginPath();
+                this.context.lineWidth = 1;
                 this.context.strokeStyle = 'blue';
                 this.context.rect(
                     x,
@@ -922,13 +924,13 @@ class Renderer {
         }
 
         const textLinesIndexes = this.textLinesIndexes;
-        let yMargin = textFontLineHeight * 0.1;
+        let yMargin = 0;
         if (textVerticalAlign === 'top') {
-            yMargin = textFontLineHeight * 0.8;
+            yMargin = authorFontLineHeight * 0.6;
         }
         let y = (textLinesIndexes.last * textFontLineHeight) + (textFontLineHeight / 2) + yMargin;
         if (authorVerticalAlign === 'bottom' || textVerticalAlign === 'bottom') {
-            y = height - (this.state.marginHorizontal / 2) - (authorFontLineHeight * 1.2);
+            y = height - (this.state.marginHorizontal / 2) - (authorFontLineHeight * 1.3);
         }
 
         switch (separator) {
@@ -1034,9 +1036,9 @@ class Renderer {
         }
 
         const textLinesIndexes = this.textLinesIndexes;
-        let yMargin = textFontLineHeight * 0.7;
+        let yMargin = authorFontLineHeight * 0.6;
         if (textVerticalAlign === 'top') {
-            yMargin *= 2;
+            yMargin = authorFontLineHeight * 1.2;
         }
         let y = (textLinesIndexes.last * textFontLineHeight) + (textFontLineHeight / 2) + yMargin;
         if (authorVerticalAlign === 'bottom' || textVerticalAlign === 'bottom') {
