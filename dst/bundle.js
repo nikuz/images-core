@@ -676,7 +676,7 @@ function () {
       // in px
       textFontLoaded: false,
       textEffect: 'fade',
-      // type | fade lines | fade letters | slide lines | append lines | fade
+      // type | fade-lines | fade-letters | slide-lines | append-lines | fade
       textFullyRendered: false,
       textLastRenderedLetter: '',
       textFrame: 1,
@@ -713,8 +713,13 @@ function () {
       // common
       animate: true,
       frameQuality: 0.93,
-      overlay: 'border',
+      overlay: '',
       // solid | lines | border
+      separator: '',
+      // line | dash | dot
+      separatorFullyRendered: false,
+      separatorOpacity: 0,
+      separatorOpacityStep: 0.1,
       marginVertical: 100,
       // in px
       marginHorizontal: 50,
@@ -955,7 +960,7 @@ function () {
       _this.context.font = font;
       var fontLineHeight = fontSize * 1.5;
       var availableHeight = height - marginVertical;
-      var maxTextLines = Math.floor(availableHeight / fontLineHeight);
+      var maxTextLines = availableHeight / fontLineHeight;
       var maxDrawTextLines = Math.floor((availableHeight - additionalMargin) / fontLineHeight);
 
       if (splitToLines) {
@@ -1346,7 +1351,7 @@ function () {
       }
     });
 
-    _defineProperty(this, "renderAuthor", function () {
+    _defineProperty(this, "renderSeparator", function () {
       if (!_this.context) {
         return;
       }
@@ -1355,22 +1360,156 @@ function () {
           animate = _this$state8.animate,
           textFontLineHeight = _this$state8.textFontLineHeight,
           textVerticalAlign = _this$state8.textVerticalAlign,
-          authorEffect = _this$state8.authorEffect,
-          authorFontSize = _this$state8.authorFontSize,
-          authorFontFamily = _this$state8.authorFontFamily,
-          author = _this$state8.author,
-          authorFrame = _this$state8.authorFrame,
-          authorFrameOpacity = _this$state8.authorFrameOpacity,
-          authorFrameOpacityStep = _this$state8.authorFrameOpacityStep,
-          authorFramePosition = _this$state8.authorFramePosition,
-          authorFramePositionStep = _this$state8.authorFramePositionStep,
-          authorFullyRendered = _this$state8.authorFullyRendered,
           authorFontLineHeight = _this$state8.authorFontLineHeight,
           width = _this$state8.width,
           height = _this$state8.height,
           color = _this$state8.color,
           authorAlign = _this$state8.authorAlign,
-          authorVerticalAlign = _this$state8.authorVerticalAlign;
+          authorVerticalAlign = _this$state8.authorVerticalAlign,
+          authorFontSize = _this$state8.authorFontSize,
+          separatorOpacity = _this$state8.separatorOpacity,
+          separatorOpacityStep = _this$state8.separatorOpacityStep,
+          separatorFullyRendered = _this$state8.separatorFullyRendered,
+          separator = _this$state8.separator;
+
+      if (!separator || separator === '') {
+        if (!separatorFullyRendered) {
+          _this.newState = {
+            separatorFullyRendered: true
+          };
+        }
+
+        return;
+      }
+
+      var marginHorizontal = _this.marginHorizontal;
+      var separatorWidth = width / 5;
+      var x = marginHorizontal / 2;
+
+      if (authorAlign === 'center') {
+        x = (width - separatorWidth) / 2;
+      } else if (authorAlign === 'right') {
+        x = width - separatorWidth - marginHorizontal / 2;
+      }
+
+      var textLinesIndexes = _this.textLinesIndexes;
+      var yMargin = textFontLineHeight * 0.1;
+
+      if (textVerticalAlign === 'top') {
+        yMargin = textFontLineHeight * 0.8;
+      }
+
+      var y = textLinesIndexes.last * textFontLineHeight + textFontLineHeight / 2 + yMargin;
+
+      if (authorVerticalAlign === 'bottom' || textVerticalAlign === 'bottom') {
+        y = height - _this.state.marginHorizontal / 2 - authorFontLineHeight * 1.2;
+      }
+
+      switch (separator) {
+        case 'line':
+          _this.context.lineWidth = authorFontSize / 10;
+
+          _this.context.beginPath();
+
+          _this.context.moveTo(x, y);
+
+          _this.context.lineTo(x + separatorWidth, y);
+
+          break;
+
+        case 'dash':
+          {
+            _this.context.lineWidth = authorFontSize / 10;
+
+            _this.context.beginPath();
+
+            var piecesCount = 4;
+            var gapWidth = separatorWidth / 10;
+            var pieceWidth = (separatorWidth - gapWidth * (piecesCount - 1)) / piecesCount;
+
+            for (var i = 0, l = piecesCount; i < l; i++) {
+              var gap = i === 0 ? 0 : gapWidth;
+              var xPosition = x + pieceWidth * i + gap * i;
+
+              _this.context.moveTo(xPosition, y);
+
+              _this.context.lineTo(xPosition + pieceWidth, y);
+            }
+
+            break;
+          }
+
+        case 'dot':
+          {
+            _this.context.beginPath();
+
+            var dotsCount = 7;
+
+            var _gapWidth = separatorWidth / dotsCount;
+
+            var radius = authorFontSize / 15;
+
+            for (var _i = 0, _l = dotsCount; _i < _l; _i++) {
+              var _gap = _i === 0 ? 0 : _gapWidth;
+
+              var _xPosition = x + radius / 2 * _i + _gap * _i;
+
+              _this.context.arc(_xPosition, y, radius, 0, Math.PI * 2);
+            }
+
+            break;
+          }
+
+        default:
+      }
+
+      if (animate) {
+        _this.context.strokeStyle = hexToRgbA(color, separatorOpacity);
+        _this.context.fillStyle = hexToRgbA(color, separatorOpacity);
+        _this.newState = {
+          separatorFullyRendered: separatorOpacity >= 1,
+          separatorOpacity: separatorOpacity + separatorOpacityStep
+        };
+      } else {
+        _this.context.strokeStyle = color;
+        _this.context.fillStyle = color;
+        _this.newState = {
+          separatorFullyRendered: true
+        };
+      }
+
+      if (separator === 'line' || separator === 'dash') {
+        _this.context.stroke();
+      } else {
+        _this.context.fill();
+      }
+    });
+
+    _defineProperty(this, "renderAuthor", function () {
+      if (!_this.context) {
+        return;
+      }
+
+      var _this$state9 = _this.state,
+          animate = _this$state9.animate,
+          textFontLineHeight = _this$state9.textFontLineHeight,
+          textVerticalAlign = _this$state9.textVerticalAlign,
+          authorEffect = _this$state9.authorEffect,
+          authorFontSize = _this$state9.authorFontSize,
+          authorFontFamily = _this$state9.authorFontFamily,
+          author = _this$state9.author,
+          authorFrame = _this$state9.authorFrame,
+          authorFrameOpacity = _this$state9.authorFrameOpacity,
+          authorFrameOpacityStep = _this$state9.authorFrameOpacityStep,
+          authorFramePosition = _this$state9.authorFramePosition,
+          authorFramePositionStep = _this$state9.authorFramePositionStep,
+          authorFullyRendered = _this$state9.authorFullyRendered,
+          authorFontLineHeight = _this$state9.authorFontLineHeight,
+          width = _this$state9.width,
+          height = _this$state9.height,
+          color = _this$state9.color,
+          authorAlign = _this$state9.authorAlign,
+          authorVerticalAlign = _this$state9.authorVerticalAlign;
       var marginHorizontal = _this.marginHorizontal;
       _this.context.font = _this.getFont(authorFontSize, authorFontFamily);
 
@@ -1394,7 +1533,7 @@ function () {
       var y = textLinesIndexes.last * textFontLineHeight + textFontLineHeight / 2 + yMargin;
 
       if (authorVerticalAlign === 'bottom' || textVerticalAlign === 'bottom') {
-        y = height - _this.state.marginHorizontal / 2 - authorFontLineHeight;
+        y = height - _this.state.marginHorizontal / 2 - authorFontLineHeight * 0.7;
       }
 
       var lastRenderedLetter = '';
@@ -1459,15 +1598,16 @@ function () {
     });
 
     _defineProperty(this, "render", function () {
-      var _this$state9 = _this.state,
-          image = _this$state9.image,
-          textFullyRendered = _this$state9.textFullyRendered,
-          animate = _this$state9.animate,
-          overlay = _this$state9.overlay,
-          width = _this$state9.width,
-          height = _this$state9.height,
-          textFontLoaded = _this$state9.textFontLoaded,
-          authorFontLoaded = _this$state9.authorFontLoaded;
+      var _this$state10 = _this.state,
+          image = _this$state10.image,
+          textFullyRendered = _this$state10.textFullyRendered,
+          animate = _this$state10.animate,
+          overlay = _this$state10.overlay,
+          width = _this$state10.width,
+          height = _this$state10.height,
+          textFontLoaded = _this$state10.textFontLoaded,
+          authorFontLoaded = _this$state10.authorFontLoaded,
+          separatorFullyRendered = _this$state10.separatorFullyRendered;
 
       if (!textFontLoaded || !authorFontLoaded) {
         setTimeout(_this.render, 10);
@@ -1501,6 +1641,10 @@ function () {
       }
 
       if (textFullyRendered || !animate) {
+        _this.renderSeparator();
+      }
+
+      if (separatorFullyRendered || !animate) {
         _this.renderAuthor();
       }
 
@@ -1508,14 +1652,13 @@ function () {
     });
 
     _defineProperty(this, "postRender", function () {
-      var _this$state10 = _this.state,
-          textEffect = _this$state10.textEffect,
-          textFullyRendered = _this$state10.textFullyRendered,
-          textLastRenderedLetter = _this$state10.textLastRenderedLetter,
-          authorEffect = _this$state10.authorEffect,
-          authorFullyRendered = _this$state10.authorFullyRendered,
-          authorLastRenderedLetter = _this$state10.authorLastRenderedLetter,
-          frameQuality = _this$state10.frameQuality;
+      var _this$state11 = _this.state,
+          textEffect = _this$state11.textEffect,
+          textLastRenderedLetter = _this$state11.textLastRenderedLetter,
+          authorEffect = _this$state11.authorEffect,
+          authorFullyRendered = _this$state11.authorFullyRendered,
+          authorLastRenderedLetter = _this$state11.authorLastRenderedLetter,
+          frameQuality = _this$state11.frameQuality;
 
       if (_this.canvasEl && window.puppeteer && (textEffect !== 'type' || textLastRenderedLetter !== '' && textLastRenderedLetter !== ' ' || authorEffect !== 'type' || authorLastRenderedLetter !== '' && authorLastRenderedLetter !== ' ')) {
         var imgdata = _this.canvasEl.toDataURL('image/jpeg', frameQuality);
@@ -1523,7 +1666,7 @@ function () {
         console.log(imgdata); // eslint-disable-line
       }
 
-      if (!textFullyRendered || !authorFullyRendered) {
+      if (!authorFullyRendered) {
         if (window.puppeteer) {
           _this.render();
         } else {
@@ -1542,7 +1685,6 @@ function () {
     });
 
     _defineProperty(this, "rerender", function () {
-      var textFullyRendered = _this.state.textFullyRendered;
       var authorFullyRendered = _this.state.authorFullyRendered;
       _this.newState = {
         textFullyRendered: false,
@@ -1550,10 +1692,12 @@ function () {
         textFrame: 1,
         authorFullyRendered: false,
         authorLastRenderedLetter: '',
-        authorFrame: 1
+        authorFrame: 1,
+        separatorFullyRendered: false,
+        separatorFrame: 1
       };
 
-      if (textFullyRendered && authorFullyRendered) {
+      if (authorFullyRendered) {
         _this.renderStartedAt = Date.now();
 
         _this.render();
@@ -1563,7 +1707,8 @@ function () {
     _defineProperty(this, "stop", function () {
       _this.newState = {
         textFullyRendered: true,
-        authorFullyRendered: true
+        authorFullyRendered: true,
+        separatorFullyRendered: true
       };
     });
 
@@ -1571,7 +1716,11 @@ function () {
       textFontSize: props.width / 15,
       authorFontSize: props.width / 15,
       marginVertical: props.height / 5,
-      marginHorizontal: props.height / 9
+      marginHorizontal: props.height / 9,
+      textFrameOpacity: props.textEffect === 'type' ? 0.5 : 0.1,
+      textFrameOpacityStep: props.textEffect === 'type' ? 0.5 : 0.1,
+      authorFrameOpacity: props.authorEffect === 'type' ? 0.5 : 0.1,
+      authorFrameOpacityStep: props.authorEffect === 'type' ? 0.5 : 0.1
     });
     this.loadFonts(this.state.textFontFamily);
     this.loadFonts(this.state.authorFontFamily);
@@ -1627,10 +1776,10 @@ function () {
   }, {
     key: "textLinesIndexes",
     get: function get() {
-      var _this$state11 = this.state,
-          textVerticalAlign = _this$state11.textVerticalAlign,
-          maxTextLines = _this$state11.maxTextLines,
-          textLines = _this$state11.textLines;
+      var _this$state12 = this.state,
+          textVerticalAlign = _this$state12.textVerticalAlign,
+          maxTextLines = _this$state12.maxTextLines,
+          textLines = _this$state12.textLines;
       var first = 0;
 
       switch (textVerticalAlign) {

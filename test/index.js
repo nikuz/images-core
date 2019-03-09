@@ -7,11 +7,11 @@ document.addEventListener('DOMContentLoaded', () => {
         container: 'body',
         width: 600,
         height: 600,
-        imageURL: '/graphics/001.jpeg',
+        imageURL: '/graphics/001.jpg',
         // text
         text: 'Specify the color of the box to write. For the general syntax of this option',
         textFontFamily: 'Exo',
-        textEffect: 'append-lines', // type | fade lines | fade letters | slide lines | append lines | fade
+        textEffect: 'append-lines', // type | fade-lines | fade-letters | slide-lines | append-lines | fade
         textAlign: 'right', // left | center | right
         textVerticalAlign: 'center', // top | center | bottom
         // author
@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
         animate: true,
         frameQuality: 0.93,
         overlay: 'lines', // solid | lines | border
+        separator: 'dot', // line | dash | dot
         color: '#FFF',
     });
     image.render();

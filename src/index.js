@@ -31,6 +31,10 @@ class Renderer {
             authorFontSize: props.width / 15,
             marginVertical: props.height / 5,
             marginHorizontal: props.height / 9,
+            textFrameOpacity: props.textEffect === 'type' ? 0.5 : 0.1,
+            textFrameOpacityStep: props.textEffect === 'type' ? 0.5 : 0.1,
+            authorFrameOpacity: props.authorEffect === 'type' ? 0.5 : 0.1,
+            authorFrameOpacityStep: props.authorEffect === 'type' ? 0.5 : 0.1,
         };
 
         this.loadFonts(this.state.textFontFamily);
@@ -74,7 +78,7 @@ class Renderer {
         textFontSize: 12, // in px
         textFontLineHeight: 0, // in px
         textFontLoaded: false,
-        textEffect: 'fade', // type | fade lines | fade letters | slide lines | append lines | fade
+        textEffect: 'fade', // type | fade-lines | fade-letters | slide-lines | append-lines | fade
         textFullyRendered: false,
         textLastRenderedLetter: '',
         textFrame: 1,
@@ -107,6 +111,10 @@ class Renderer {
         animate: true,
         frameQuality: 0.93,
         overlay: '', // solid | lines | border
+        separator: '', // line | dash | dot
+        separatorFullyRendered: false,
+        separatorOpacity: 0,
+        separatorOpacityStep: 0.1,
         marginVertical: 100, // in px
         marginHorizontal: 50, // in px
         color: '#FFF',
@@ -378,7 +386,7 @@ class Renderer {
         this.context.font = font;
         const fontLineHeight = fontSize * 1.5;
         const availableHeight = height - marginVertical;
-        const maxTextLines = Math.floor(availableHeight / fontLineHeight);
+        const maxTextLines = availableHeight / fontLineHeight;
         const maxDrawTextLines = Math.floor((availableHeight - additionalMargin) / fontLineHeight);
 
         if (splitToLines) {
@@ -872,6 +880,121 @@ class Renderer {
         }
     };
 
+    renderSeparator = () => {
+        if (!this.context) {
+            return;
+        }
+
+        const {
+            animate,
+            textFontLineHeight,
+            textVerticalAlign,
+            authorFontLineHeight,
+            width,
+            height,
+            color,
+            authorAlign,
+            authorVerticalAlign,
+            authorFontSize,
+            separatorOpacity,
+            separatorOpacityStep,
+            separatorFullyRendered,
+            separator,
+        } = this.state;
+
+        if (!separator || separator === '') {
+            if (!separatorFullyRendered) {
+                this.newState = {
+                    separatorFullyRendered: true,
+                };
+            }
+            return;
+        }
+
+        const { marginHorizontal } = this;
+        const separatorWidth = width / 5;
+
+        let x = marginHorizontal / 2;
+        if (authorAlign === 'center') {
+            x = (width - separatorWidth) / 2;
+        } else if (authorAlign === 'right') {
+            x = width - separatorWidth - (marginHorizontal / 2);
+        }
+
+        const textLinesIndexes = this.textLinesIndexes;
+        let yMargin = textFontLineHeight * 0.1;
+        if (textVerticalAlign === 'top') {
+            yMargin = textFontLineHeight * 0.8;
+        }
+        let y = (textLinesIndexes.last * textFontLineHeight) + (textFontLineHeight / 2) + yMargin;
+        if (authorVerticalAlign === 'bottom' || textVerticalAlign === 'bottom') {
+            y = height - (this.state.marginHorizontal / 2) - (authorFontLineHeight * 1.2);
+        }
+
+        switch (separator) {
+            case 'line':
+                this.context.lineWidth = authorFontSize / 10;
+                this.context.beginPath();
+                this.context.moveTo(x, y);
+                this.context.lineTo(x + separatorWidth, y);
+                break;
+            case 'dash': {
+                this.context.lineWidth = authorFontSize / 10;
+                this.context.beginPath();
+                const piecesCount = 4;
+                const gapWidth = separatorWidth / 10;
+                const pieceWidth = (separatorWidth - (gapWidth * (piecesCount - 1))) / piecesCount;
+                for (let i = 0, l = piecesCount; i < l; i++) {
+                    const gap = i === 0 ? 0 : gapWidth;
+                    const xPosition = x + (pieceWidth * i) + (gap * i);
+                    this.context.moveTo(xPosition, y);
+                    this.context.lineTo(xPosition + pieceWidth, y);
+                }
+                break;
+            }
+            case 'dot': {
+                this.context.beginPath();
+                const dotsCount = 7;
+                const gapWidth = separatorWidth / dotsCount;
+                const radius = authorFontSize / 15;
+                for (let i = 0, l = dotsCount; i < l; i++) {
+                    const gap = i === 0 ? 0 : gapWidth;
+                    const xPosition = x + ((radius / 2) * i) + (gap * i);
+                    this.context.arc(
+                        xPosition,
+                        y,
+                        radius,
+                        0,
+                        Math.PI * 2
+                    );
+                }
+                break;
+            }
+            default:
+        }
+
+        if (animate) {
+            this.context.strokeStyle = hexToRgbA(color, separatorOpacity);
+            this.context.fillStyle = hexToRgbA(color, separatorOpacity);
+            this.newState = {
+                separatorFullyRendered: separatorOpacity >= 1,
+                separatorOpacity: separatorOpacity + separatorOpacityStep,
+            };
+        } else {
+            this.context.strokeStyle = color;
+            this.context.fillStyle = color;
+            this.newState = {
+                separatorFullyRendered: true,
+            };
+        }
+
+        if (separator === 'line' || separator === 'dash') {
+            this.context.stroke();
+        } else {
+            this.context.fill();
+        }
+    };
+
     renderAuthor = () => {
         if (!this.context) {
             return;
@@ -917,7 +1040,7 @@ class Renderer {
         }
         let y = (textLinesIndexes.last * textFontLineHeight) + (textFontLineHeight / 2) + yMargin;
         if (authorVerticalAlign === 'bottom' || textVerticalAlign === 'bottom') {
-            y = height - (this.state.marginHorizontal / 2) - authorFontLineHeight;
+            y = height - (this.state.marginHorizontal / 2) - (authorFontLineHeight * 0.7);
         }
 
         let lastRenderedLetter = '';
@@ -1012,6 +1135,7 @@ class Renderer {
             height,
             textFontLoaded,
             authorFontLoaded,
+            separatorFullyRendered,
         } = this.state;
 
         if (!textFontLoaded || !authorFontLoaded) {
@@ -1040,6 +1164,9 @@ class Renderer {
             this.renderOverlay();
         }
         if (textFullyRendered || !animate) {
+            this.renderSeparator();
+        }
+        if (separatorFullyRendered || !animate) {
             this.renderAuthor();
         }
         this.postRender();
@@ -1048,7 +1175,6 @@ class Renderer {
     postRender = () => {
         const {
             textEffect,
-            textFullyRendered,
             textLastRenderedLetter,
             authorEffect,
             authorFullyRendered,
@@ -1068,7 +1194,7 @@ class Renderer {
             console.log(imgdata); // eslint-disable-line
         }
 
-        if (!textFullyRendered || !authorFullyRendered) {
+        if (!authorFullyRendered) {
             if (window.puppeteer) {
                 this.render();
             } else {
@@ -1087,7 +1213,6 @@ class Renderer {
     };
 
     rerender = () => {
-        const textFullyRendered = this.state.textFullyRendered;
         const authorFullyRendered = this.state.authorFullyRendered;
 
         this.newState = {
@@ -1097,9 +1222,11 @@ class Renderer {
             authorFullyRendered: false,
             authorLastRenderedLetter: '',
             authorFrame: 1,
+            separatorFullyRendered: false,
+            separatorFrame: 1,
         };
 
-        if (textFullyRendered && authorFullyRendered) {
+        if (authorFullyRendered) {
             this.renderStartedAt = Date.now();
             this.render();
         }
@@ -1109,6 +1236,7 @@ class Renderer {
         this.newState = {
             textFullyRendered: true,
             authorFullyRendered: true,
+            separatorFullyRendered: true,
         };
     };
 }
