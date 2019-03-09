@@ -106,7 +106,7 @@ class Renderer {
         // common
         animate: true,
         frameQuality: 0.93,
-        overlay: 'border', // solid | lines | border
+        overlay: '', // solid | lines | border
         marginVertical: 100, // in px
         marginHorizontal: 50, // in px
         color: '#FFF',
