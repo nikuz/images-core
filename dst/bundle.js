@@ -799,7 +799,7 @@ function () {
         el.style.position = 'absolute';
         el.style.top = '-9999px';
         el.style.left = '-9999px';
-        el.style.fontSize = "".concat(fontItem.fontSize, "px");
+        el.style.font = "".concat(fontItem.fontSize, "px system");
         document.body.appendChild(el);
         var fallbackFontWidth = el.offsetWidth;
         el.style.font = fontItem.font;

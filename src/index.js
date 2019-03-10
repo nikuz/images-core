@@ -187,7 +187,7 @@ class Renderer {
             el.style.position = 'absolute';
             el.style.top = '-9999px';
             el.style.left = '-9999px';
-            el.style.fontSize = `${fontItem.fontSize}px`;
+            el.style.font = `${fontItem.fontSize}px system`;
             document.body.appendChild(el);
             const fallbackFontWidth = el.offsetWidth;
             el.style.font = fontItem.font;
