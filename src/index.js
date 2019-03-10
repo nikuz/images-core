@@ -904,7 +904,7 @@ class Renderer {
             separator,
         } = this.state;
 
-        if (!separator || separator === '') {
+        if (separator !== 'line' && separator !== 'dash' && separator !== 'dot') {
             if (!separatorFullyRendered) {
                 this.newState = {
                     separatorFullyRendered: true,

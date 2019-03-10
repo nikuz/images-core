@@ -1372,7 +1372,7 @@ function () {
           separatorFullyRendered = _this$state8.separatorFullyRendered,
           separator = _this$state8.separator;
 
-      if (!separator || separator === '') {
+      if (separator !== 'line' && separator !== 'dash' && separator !== 'dot') {
         if (!separatorFullyRendered) {
           _this.newState = {
             separatorFullyRendered: true
