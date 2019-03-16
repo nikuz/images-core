@@ -375,6 +375,22 @@ class Renderer {
             } = this.state;
             const debug = process.env.NODE_ENV !== 'production' && this.state.debug;
             const baseFont = height < width ? height / 5 : width / 6;
+            const lineHeights = {
+                Kaushan: 1.47,
+                Guerilla: 1,
+                Courgette: 1.3,
+                Exo: 1.3,
+                GreatVibes: 1.2,
+                Lato: 1.3,
+                Lobster: 1.3,
+                MyUnderwood: 1.3,
+                NickAinley: 1.3,
+                Sensei: 1.3,
+                Sports: 1.3,
+                Tahoma: 1.3,
+                Typograph: 1.3,
+                YellowTail: 1.3,
+            };
 
             const container = document.createElement('div');
             container.id = 'canvas-html-container';
@@ -397,7 +413,10 @@ class Renderer {
             });
 
             const textEl = document.createElement('div');
-            const maxFontSize = overlaySolid ? 59 : 68;
+            let maxFontSize = overlaySolid ? 59 : 68;
+            if (textFontFamily === 'Sports') {
+                maxFontSize = overlaySolid ? 50 : 53;
+            }
             const minFontSize = overlaySolid ? 33 : 35;
             const textFZ = remapValue(
                 text.length,
@@ -407,7 +426,7 @@ class Renderer {
                 height < width ? minFontSize * 1.2 : minFontSize
             );
             textEl.id = 'canvas-html-container-text';
-            let textElStyles = { font: `${textFZ}%/1.47 ${textFontFamily}` };
+            let textElStyles = { font: `${textFZ}%/${lineHeights[textFontFamily]} ${textFontFamily}` };
             if (authorVerticalAlign === 'bottom') {
                 textElStyles = {
                     ...textElStyles,
@@ -482,8 +501,8 @@ class Renderer {
             const textFontSize = parseFloat(textElStyle.getPropertyValue('font-size'));
 
             const authorEl = document.createElement('div');
-            const authorFZ = textFZ - 5;
             authorEl.id = 'canvas-html-container-author';
+            let authorFZ = textFZ - 5;
             const authorMargin = remapValue(
                 text.length,
                 10,
@@ -492,13 +511,20 @@ class Renderer {
                 separator ? 6 : 3
             );
             this.applyStyle(authorEl, {
-                font: `${authorFZ}%/1.47 ${authorFontFamily}`,
+                font: `${authorFZ}%/${lineHeights[authorFontFamily]} ${authorFontFamily}`,
                 alignSelf: authorAlign === 'right' ? 'flex-end' : authorAlign,
                 marginTop: `${authorMargin}%`,
             });
             authorEl.innerText = author;
 
             container.appendChild(authorEl);
+
+            while (authorEl.offsetWidth > width - (marginHorizontal * 2)) {
+                authorFZ -= 1;
+                this.applyStyle(authorEl, {
+                    font: `${authorFZ}%/${lineHeights[authorFontFamily]} ${authorFontFamily}`,
+                });
+            }
 
             const authorElStyle = window.getComputedStyle(authorEl, null);
             const authorFontSize = parseFloat(authorElStyle.getPropertyValue('font-size'));

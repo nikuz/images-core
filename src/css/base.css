@@ -21,4 +21,5 @@
 #canvas-html-container-author {
     display: flex;
     flex-direction: column;
+    white-space: nowrap;
 }

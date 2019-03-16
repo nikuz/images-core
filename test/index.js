@@ -5,26 +5,26 @@ import './styles.css';
 document.addEventListener('DOMContentLoaded', () => {
     const image = new Renderer({
         container: 'body',
-        width: 600,
-        height: 600,
+        width: 1024,
+        height: 1024 / 2,
         imageURL: '/graphics/001.jpg',
         // text
         text: 'There is no elevator to success, you have to take the stairs',
-        textFontFamily: 'Guerilla',
+        textFontFamily: 'Sports',
         textEffect: 'slide-lines', // type | fade-lines | fade-letters | slide-lines | append-lines | fade
-        textAlign: 'right', // left | center | right
+        textAlign: 'center', // left | center | right
         textVerticalAlign: 'center', // top | center | bottom
         // author
         author: 'William Longgood',
-        authorFontFamily: 'Kaushan',
+        authorFontFamily: 'Sports',
         authorEffect: 'fade', // type | slide | append | fade
-        authorAlign: 'right', // left | center | right
+        authorAlign: 'center', // left | center | right
         authorVerticalAlign: '', // stick | bottom
         // common
         animate: true,
         frameQuality: 0.93,
         overlay: 'solid', // solid | lines | border
-        separator: 'dot', // line | dash | dot
+        separator: '', // line | dash | dot
         color: '#FFF',
         debug: false,
     });

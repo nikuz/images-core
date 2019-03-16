@@ -967,6 +967,22 @@ function () {
             color = _this$state5.color;
         var debug =  false && false;
         var baseFont = height < width ? height / 5 : width / 6;
+        var lineHeights = {
+          Kaushan: 1.47,
+          Guerilla: 1,
+          Courgette: 1.3,
+          Exo: 1.3,
+          GreatVibes: 1.2,
+          Lato: 1.3,
+          Lobster: 1.3,
+          MyUnderwood: 1.3,
+          NickAinley: 1.3,
+          Sensei: 1.3,
+          Sports: 1.3,
+          Tahoma: 1.3,
+          Typograph: 1.3,
+          YellowTail: 1.3
+        };
         var container = document.createElement('div');
         container.id = 'canvas-html-container';
         var overlaySolid = overlay === 'solid' || overlay === 'border';
@@ -988,11 +1004,16 @@ function () {
 
         var textEl = document.createElement('div');
         var maxFontSize = overlaySolid ? 59 : 68;
+
+        if (textFontFamily === 'Sports') {
+          maxFontSize = overlaySolid ? 50 : 53;
+        }
+
         var minFontSize = overlaySolid ? 33 : 35;
         var textFZ = remapValue(text.length, 10, 256, height < width ? maxFontSize * 1.4 : maxFontSize, height < width ? minFontSize * 1.2 : minFontSize);
         textEl.id = 'canvas-html-container-text';
         var textElStyles = {
-          font: "".concat(textFZ, "%/1.47 ").concat(textFontFamily)
+          font: "".concat(textFZ, "%/").concat(lineHeights[textFontFamily], " ").concat(textFontFamily)
         };
 
         if (authorVerticalAlign === 'bottom') {
@@ -1071,18 +1092,27 @@ function () {
         var textElStyle = window.getComputedStyle(textEl, null);
         var textFontSize = parseFloat(textElStyle.getPropertyValue('font-size'));
         var authorEl = document.createElement('div');
-        var authorFZ = textFZ - 5;
         authorEl.id = 'canvas-html-container-author';
+        var authorFZ = textFZ - 5;
         var authorMargin = remapValue(text.length, 10, 256, separator ? 8 : 5, separator ? 6 : 3);
 
         _this.applyStyle(authorEl, {
-          font: "".concat(authorFZ, "%/1.47 ").concat(authorFontFamily),
+          font: "".concat(authorFZ, "%/").concat(lineHeights[authorFontFamily], " ").concat(authorFontFamily),
           alignSelf: authorAlign === 'right' ? 'flex-end' : authorAlign,
           marginTop: "".concat(authorMargin, "%")
         });
 
         authorEl.innerText = author;
         container.appendChild(authorEl);
+
+        while (authorEl.offsetWidth > width - marginHorizontal * 2) {
+          authorFZ -= 1;
+
+          _this.applyStyle(authorEl, {
+            font: "".concat(authorFZ, "%/").concat(lineHeights[authorFontFamily], " ").concat(authorFontFamily)
+          });
+        }
+
         var authorElStyle = window.getComputedStyle(authorEl, null);
         var authorFontSize = parseFloat(authorElStyle.getPropertyValue('font-size'));
         var authorPositionProps = authorEl.getBoundingClientRect();
@@ -1796,7 +1826,7 @@ if(false) {}
 
 exports = module.exports = __webpack_require__(0)(false);
 // Module
-exports.push([module.i, "#images-core-container {\n    display: inline-block;\n    position: relative;\n}\n\n#canvas-html-container {\n    position: absolute;\n    overflow: hidden;\n    box-sizing: border-box;\n}\n\n#canvas-html-container-text {\n    display: flex;\n    flex-direction: column;\n}\n\n#canvas-html-container-text div {\n    white-space: nowrap;\n}\n\n#canvas-html-container-author {\n    display: flex;\n    flex-direction: column;\n}\n", ""]);
+exports.push([module.i, "#images-core-container {\n    display: inline-block;\n    position: relative;\n}\n\n#canvas-html-container {\n    position: absolute;\n    overflow: hidden;\n    box-sizing: border-box;\n}\n\n#canvas-html-container-text {\n    display: flex;\n    flex-direction: column;\n}\n\n#canvas-html-container-text div {\n    white-space: nowrap;\n}\n\n#canvas-html-container-author {\n    display: flex;\n    flex-direction: column;\n    white-space: nowrap;\n}\n", ""]);
 
 
 
