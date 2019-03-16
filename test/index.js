@@ -9,14 +9,14 @@ document.addEventListener('DOMContentLoaded', () => {
         height: 600,
         imageURL: '/graphics/001.jpg',
         // text
-        text: 'There is no elevator to success, you have to take the stairs. There is no elevator to success, you have to take the stairs.',
-        textFontFamily: 'Courgette',
-        textEffect: 'append-lines', // type | fade-lines | fade-letters | slide-lines | append-lines | fade
+        text: 'There is no elevator to success, you have to take the stairs',
+        textFontFamily: 'Guerilla',
+        textEffect: 'slide-lines', // type | fade-lines | fade-letters | slide-lines | append-lines | fade
         textAlign: 'right', // left | center | right
         textVerticalAlign: 'center', // top | center | bottom
         // author
         author: 'William Longgood',
-        authorFontFamily: 'Lobster',
+        authorFontFamily: 'Kaushan',
         authorEffect: 'fade', // type | slide | append | fade
         authorAlign: 'right', // left | center | right
         authorVerticalAlign: '', // stick | bottom
@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
         animate: true,
         frameQuality: 0.93,
         overlay: 'solid', // solid | lines | border
-        separator: 'line', // line | dash | dot
+        separator: 'dot', // line | dash | dot
         color: '#FFF',
         debug: false,
     });

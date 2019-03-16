@@ -1,0 +1,24 @@
+#images-core-container {
+    display: inline-block;
+    position: relative;
+}
+
+#canvas-html-container {
+    position: absolute;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+#canvas-html-container-text {
+    display: flex;
+    flex-direction: column;
+}
+
+#canvas-html-container-text div {
+    white-space: nowrap;
+}
+
+#canvas-html-container-author {
+    display: flex;
+    flex-direction: column;
+}
