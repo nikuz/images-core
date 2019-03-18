@@ -5,8 +5,8 @@ import './styles.css';
 document.addEventListener('DOMContentLoaded', () => {
     const image = new Renderer({
         container: 'body',
-        width: 1024,
-        height: 1024 / 2,
+        width: 600,
+        height: 600,
         imageURL: '/graphics/001.jpg',
         // text
         text: 'There is no elevator to success, you have to take the stairs',
@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
         authorAlign: 'center', // left | center | right
         authorVerticalAlign: '', // stick | bottom
         // common
-        animate: true,
+        animate: false,
         frameQuality: 0.93,
         overlay: 'solid', // solid | lines | border
         separator: '', // line | dash | dot

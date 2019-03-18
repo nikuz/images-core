@@ -3,22 +3,22 @@
     position: relative;
 }
 
-#canvas-html-container {
+#canvas-html-wrapper {
     position: absolute;
     overflow: hidden;
     box-sizing: border-box;
 }
 
-#canvas-html-container-text {
+#canvas-html-wrapper-text {
     display: flex;
     flex-direction: column;
 }
 
-#canvas-html-container-text div {
+#canvas-html-wrapper-text div {
     white-space: nowrap;
 }
 
-#canvas-html-container-author {
+#canvas-html-wrapper-author {
     display: flex;
     flex-direction: column;
     white-space: nowrap;

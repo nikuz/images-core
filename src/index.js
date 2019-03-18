@@ -1,6 +1,8 @@
 
 import './css/base.css';
 
+const maxCanvasSize = 1920;
+
 const remapValue = (value, inMin, inMax, outMin, outMax) => {
     if (value < inMin) {
         return outMin;
@@ -27,11 +29,16 @@ function hexToRgbA(hex, opacity) {
 
 class Renderer {
     constructor(props) {
+        const width = props.width < maxCanvasSize ? props.width : maxCanvasSize;
+        const height = props.height < maxCanvasSize ? props.height : maxCanvasSize;
+
         this.newState = {
             ...props,
+            width,
+            height,
             text: props.text.trim(),
             textFontSize: props.width / 10,
-            marginHorizontal: props.height / 9,
+            marginHorizontal: height / 9,
             textFrameOpacity: props.textEffect === 'type' ? 0.5 : 0.1,
             textFrameOpacityStep: props.textEffect === 'type' ? 0.5 : 0.1,
             authorFrameOpacity: props.authorEffect === 'type' ? 0.5 : 0.1,
@@ -355,6 +362,23 @@ class Renderer {
         });
     };
 
+    fontParams = {
+        Kaushan: {      size: 68, lineHeight: 1.47  }, // eslint-disable-line
+        Guerilla: {     size: 80, lineHeight: 1     }, // eslint-disable-line
+        Courgette: {    size: 68, lineHeight: 1.3   }, // eslint-disable-line
+        Exo: {          size: 68, lineHeight: 1.3   }, // eslint-disable-line
+        GreatVibes: {   size: 95, lineHeight: 1     }, // eslint-disable-line
+        Lato: {         size: 65, lineHeight: 1.3   }, // eslint-disable-line
+        Lobster: {      size: 68, lineHeight: 1.3   }, // eslint-disable-line
+        MyUnderwood: {  size: 68, lineHeight: 1.3   }, // eslint-disable-line
+        NickAinley: {   size: 75, lineHeight: 1.2   }, // eslint-disable-line
+        Sensei: {       size: 68, lineHeight: 1.3   }, // eslint-disable-line
+        Sports: {       size: 55, lineHeight: 1.3   }, // eslint-disable-line
+        Tahoma: {       size: 65, lineHeight: 1.3   }, // eslint-disable-line
+        Typograph: {    size: 60, lineHeight: 1.3   }, // eslint-disable-line
+        YellowTail: {   size: 75, lineHeight: 1.2   }, // eslint-disable-line
+    };
+
     loadText = () => (
         new Promise((resolve) => {
             const {
@@ -374,26 +398,11 @@ class Renderer {
                 color,
             } = this.state;
             const debug = process.env.NODE_ENV !== 'production' && this.state.debug;
-            const baseFont = height < width ? height / 5 : width / 6;
-            const lineHeights = {
-                Kaushan: 1.47,
-                Guerilla: 1,
-                Courgette: 1.3,
-                Exo: 1.3,
-                GreatVibes: 1.2,
-                Lato: 1.3,
-                Lobster: 1.3,
-                MyUnderwood: 1.3,
-                NickAinley: 1.3,
-                Sensei: 1.3,
-                Sports: 1.3,
-                Tahoma: 1.3,
-                Typograph: 1.3,
-                YellowTail: 1.3,
-            };
+            const wrapFontSize = height < width ? height / 5 : width / 6;
+            const fontParams = this.fontParams;
 
-            const container = document.createElement('div');
-            container.id = 'canvas-html-container';
+            const wrapper = document.createElement('div');
+            wrapper.id = 'canvas-html-wrapper';
             const overlaySolid = overlay === 'solid' || overlay === 'border';
             const overlayLines = overlay === 'lines';
             const overlaySolidOrLines = overlaySolid || overlayLines;
@@ -403,8 +412,8 @@ class Renderer {
             const containerHeight = height - (
                 overlaySolidOrLines ? marginHorizontal * 2 : marginHorizontal
             );
-            this.applyStyle(container, {
-                fontSize: `${baseFont}px`,
+            this.applyStyle(wrapper, {
+                fontSize: `${wrapFontSize}px`,
                 color,
                 left: `${containerLeft}px`,
                 top: `${containerTop}px`,
@@ -413,20 +422,21 @@ class Renderer {
             });
 
             const textEl = document.createElement('div');
-            let maxFontSize = overlaySolid ? 59 : 68;
-            if (textFontFamily === 'Sports') {
-                maxFontSize = overlaySolid ? 50 : 53;
-            }
-            const minFontSize = overlaySolid ? 33 : 35;
-            const textFZ = remapValue(
+            const baseFontSize = fontParams[textFontFamily].size;
+            const maxFontSize = overlaySolid ? baseFontSize - 9 : baseFontSize;
+            const minFontSize = overlaySolid ? baseFontSize - 35 : baseFontSize - 33;
+            let textFZ = remapValue(
                 text.length,
                 10,
                 256,
-                height < width ? maxFontSize * 1.4 : maxFontSize,
+                height < width ? maxFontSize * 1.3 : maxFontSize,
                 height < width ? minFontSize * 1.2 : minFontSize
             );
-            textEl.id = 'canvas-html-container-text';
-            let textElStyles = { font: `${textFZ}%/${lineHeights[textFontFamily]} ${textFontFamily}` };
+            textEl.id = 'canvas-html-wrapper-text';
+
+            let textElStyles = {
+                alignItems: textAlign === 'right' ? 'flex-end' : textAlign,
+            };
             if (authorVerticalAlign === 'bottom') {
                 textElStyles = {
                     ...textElStyles,
@@ -435,44 +445,77 @@ class Renderer {
             }
             this.applyStyle(textEl, textElStyles);
 
-            this.containerEl.appendChild(container);
-            container.appendChild(textEl);
+            this.containerEl.appendChild(wrapper);
+            wrapper.appendChild(textEl);
 
-            const textLines = [];
+            let fontSizeIsConsistent = false;
+            let textLines = [];
+
             let line = '';
+            let lineHeight = 0;
             const words = text.split(' ');
-            words.forEach((word, index) => {
+            const lastWord = words[words.length - 1];
+            const preLastWord = words[words.length - 2];
+            if (
+                words.length > 1
+                && (lastWord.length < 5 || (lastWord.length < 8 && preLastWord.length < 5))
+            ) {
+                words[words.length - 1] = `${preLastWord} ${lastWord}`;
+                words.splice(words.length - 2, 1);
+            }
+
+            const wordProcessing = (word, index) => {
                 const el = document.createElement('span');
                 el.innerText = `${line} ${word}`;
                 this.applyStyle(el, {
-                    font: `${textFZ}% ${textFontFamily}`,
+                    position: 'absolute',
+                    font: `${textFZ}%/${fontParams[textFontFamily].lineHeight} ${textFontFamily}`,
                     whiteSpace: 'nowrap',
                 });
-                container.appendChild(el);
-                if (el.offsetWidth > width - (marginHorizontal * 2)) {
+                wrapper.appendChild(el);
+                if (el.offsetWidth > containerWidth) {
                     textLines.push(line);
                     line = word;
                 } else {
                     line += line === '' ? word : ` ${word}`;
                 }
-                container.removeChild(el);
+                if (index === word.length - 1) {
+                    lineHeight = el.offsetHeight;
+                }
+                wrapper.removeChild(el);
 
                 if (index === words.length - 1) {
                     textLines.push(line);
                 }
-            });
+            };
 
-            this.applyStyle(textEl, {
-                alignItems: textAlign === 'right' ? 'flex-end' : textAlign,
-            });
+            while (textFZ > 0 && !fontSizeIsConsistent) {
+                textLines = [];
+                line = '';
 
-            this.applyStyle(container, {
+                words.forEach(wordProcessing);
+
+                if (
+                    (textLines.length > 1 && textLines[textLines.length - 1].indexOf(' ') === -1)
+                    || textLines.length * lineHeight > containerHeight - lineHeight
+                ) {
+                    textFZ -= 1;
+                } else {
+                    fontSizeIsConsistent = true;
+                }
+            }
+
+            this.applyStyle(wrapper, {
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: textVerticalAlign === 'bottom' ? 'flex-end' : textVerticalAlign,
             });
 
             const textLettersFade = [];
+
+            this.applyStyle(textEl, {
+                font: `${textFZ}%/${fontParams[textFontFamily].lineHeight} ${textFontFamily}`,
+            });
 
             textLines.forEach((lineItem, i) => {
                 const el = document.createElement('div');
@@ -497,11 +540,13 @@ class Renderer {
                 textLettersFade.push(fadeLettersIndex);
             });
 
-            const textElStyle = window.getComputedStyle(textEl, null);
-            const textFontSize = parseFloat(textElStyle.getPropertyValue('font-size'));
+            const textElComputedStyles = window.getComputedStyle(textEl, null);
+            const computedTextFontSize = parseFloat(
+                textElComputedStyles.getPropertyValue('font-size')
+            );
 
             const authorEl = document.createElement('div');
-            authorEl.id = 'canvas-html-container-author';
+            authorEl.id = 'canvas-html-wrapper-author';
             let authorFZ = textFZ - 5;
             const authorMargin = remapValue(
                 text.length,
@@ -511,18 +556,18 @@ class Renderer {
                 separator ? 6 : 3
             );
             this.applyStyle(authorEl, {
-                font: `${authorFZ}%/${lineHeights[authorFontFamily]} ${authorFontFamily}`,
+                font: `${authorFZ}%/${fontParams[authorFontFamily].lineHeight} ${authorFontFamily}`,
                 alignSelf: authorAlign === 'right' ? 'flex-end' : authorAlign,
                 marginTop: `${authorMargin}%`,
             });
             authorEl.innerText = author;
 
-            container.appendChild(authorEl);
+            wrapper.appendChild(authorEl);
 
             while (authorEl.offsetWidth > width - (marginHorizontal * 2)) {
                 authorFZ -= 1;
                 this.applyStyle(authorEl, {
-                    font: `${authorFZ}%/${lineHeights[authorFontFamily]} ${authorFontFamily}`,
+                    font: `${authorFZ}%/${fontParams[authorFontFamily].lineHeight} ${authorFontFamily}`,
                 });
             }
 
@@ -532,7 +577,7 @@ class Renderer {
 
             this.newState = {
                 textLettersFade,
-                textFontSize,
+                textFontSize: computedTextFontSize,
                 textLines,
                 author,
                 authorFontSize,
@@ -545,12 +590,12 @@ class Renderer {
 
             requestAnimationFrame(() => {
                 if (debug) {
-                    this.applyStyle(container, {
+                    this.applyStyle(wrapper, {
                         color: 'rgba(255, 255, 255, 0.3)',
                         border: '2px solid red',
                     });
                 } else {
-                    this.containerEl.removeChild(container);
+                    this.containerEl.removeChild(wrapper);
                 }
 
                 resolve();

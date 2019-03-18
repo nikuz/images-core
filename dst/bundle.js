@@ -625,6 +625,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
+var maxCanvasSize = 1920;
 
 var remapValue = function remapValue(value, inMin, inMax, outMin, outMax) {
   if (value < inMin) {
@@ -948,6 +949,79 @@ function () {
       });
     });
 
+    _defineProperty(this, "fontParams", {
+      Kaushan: {
+        size: 68,
+        lineHeight: 1.47
+      },
+      // eslint-disable-line
+      Guerilla: {
+        size: 80,
+        lineHeight: 1
+      },
+      // eslint-disable-line
+      Courgette: {
+        size: 68,
+        lineHeight: 1.3
+      },
+      // eslint-disable-line
+      Exo: {
+        size: 68,
+        lineHeight: 1.3
+      },
+      // eslint-disable-line
+      GreatVibes: {
+        size: 95,
+        lineHeight: 1
+      },
+      // eslint-disable-line
+      Lato: {
+        size: 65,
+        lineHeight: 1.3
+      },
+      // eslint-disable-line
+      Lobster: {
+        size: 68,
+        lineHeight: 1.3
+      },
+      // eslint-disable-line
+      MyUnderwood: {
+        size: 68,
+        lineHeight: 1.3
+      },
+      // eslint-disable-line
+      NickAinley: {
+        size: 75,
+        lineHeight: 1.2
+      },
+      // eslint-disable-line
+      Sensei: {
+        size: 68,
+        lineHeight: 1.3
+      },
+      // eslint-disable-line
+      Sports: {
+        size: 55,
+        lineHeight: 1.3
+      },
+      // eslint-disable-line
+      Tahoma: {
+        size: 65,
+        lineHeight: 1.3
+      },
+      // eslint-disable-line
+      Typograph: {
+        size: 60,
+        lineHeight: 1.3
+      },
+      // eslint-disable-line
+      YellowTail: {
+        size: 75,
+        lineHeight: 1.2
+      } // eslint-disable-line
+
+    });
+
     _defineProperty(this, "loadText", function () {
       return new Promise(function (resolve) {
         var _this$state5 = _this.state,
@@ -966,25 +1040,10 @@ function () {
             separator = _this$state5.separator,
             color = _this$state5.color;
         var debug =  false && false;
-        var baseFont = height < width ? height / 5 : width / 6;
-        var lineHeights = {
-          Kaushan: 1.47,
-          Guerilla: 1,
-          Courgette: 1.3,
-          Exo: 1.3,
-          GreatVibes: 1.2,
-          Lato: 1.3,
-          Lobster: 1.3,
-          MyUnderwood: 1.3,
-          NickAinley: 1.3,
-          Sensei: 1.3,
-          Sports: 1.3,
-          Tahoma: 1.3,
-          Typograph: 1.3,
-          YellowTail: 1.3
-        };
-        var container = document.createElement('div');
-        container.id = 'canvas-html-container';
+        var wrapFontSize = height < width ? height / 5 : width / 6;
+        var fontParams = _this.fontParams;
+        var wrapper = document.createElement('div');
+        wrapper.id = 'canvas-html-wrapper';
         var overlaySolid = overlay === 'solid' || overlay === 'border';
         var overlayLines = overlay === 'lines';
         var overlaySolidOrLines = overlaySolid || overlayLines;
@@ -993,8 +1052,8 @@ function () {
         var containerWidth = width - (overlaySolid ? marginHorizontal * 2 : marginHorizontal);
         var containerHeight = height - (overlaySolidOrLines ? marginHorizontal * 2 : marginHorizontal);
 
-        _this.applyStyle(container, {
-          fontSize: "".concat(baseFont, "px"),
+        _this.applyStyle(wrapper, {
+          fontSize: "".concat(wrapFontSize, "px"),
           color: color,
           left: "".concat(containerLeft, "px"),
           top: "".concat(containerTop, "px"),
@@ -1003,17 +1062,13 @@ function () {
         });
 
         var textEl = document.createElement('div');
-        var maxFontSize = overlaySolid ? 59 : 68;
-
-        if (textFontFamily === 'Sports') {
-          maxFontSize = overlaySolid ? 50 : 53;
-        }
-
-        var minFontSize = overlaySolid ? 33 : 35;
-        var textFZ = remapValue(text.length, 10, 256, height < width ? maxFontSize * 1.4 : maxFontSize, height < width ? minFontSize * 1.2 : minFontSize);
-        textEl.id = 'canvas-html-container-text';
+        var baseFontSize = fontParams[textFontFamily].size;
+        var maxFontSize = overlaySolid ? baseFontSize - 9 : baseFontSize;
+        var minFontSize = overlaySolid ? baseFontSize - 35 : baseFontSize - 33;
+        var textFZ = remapValue(text.length, 10, 256, height < width ? maxFontSize * 1.3 : maxFontSize, height < width ? minFontSize * 1.2 : minFontSize);
+        textEl.id = 'canvas-html-wrapper-text';
         var textElStyles = {
-          font: "".concat(textFZ, "%/").concat(lineHeights[textFontFamily], " ").concat(textFontFamily)
+          alignItems: textAlign === 'right' ? 'flex-end' : textAlign
         };
 
         if (authorVerticalAlign === 'bottom') {
@@ -1024,48 +1079,76 @@ function () {
 
         _this.applyStyle(textEl, textElStyles);
 
-        _this.containerEl.appendChild(container);
+        _this.containerEl.appendChild(wrapper);
 
-        container.appendChild(textEl);
+        wrapper.appendChild(textEl);
+        var fontSizeIsConsistent = false;
         var textLines = [];
         var line = '';
+        var lineHeight = 0;
         var words = text.split(' ');
-        words.forEach(function (word, index) {
+        var lastWord = words[words.length - 1];
+        var preLastWord = words[words.length - 2];
+
+        if (words.length > 1 && (lastWord.length < 5 || lastWord.length < 8 && preLastWord.length < 5)) {
+          words[words.length - 1] = "".concat(preLastWord, " ").concat(lastWord);
+          words.splice(words.length - 2, 1);
+        }
+
+        var wordProcessing = function wordProcessing(word, index) {
           var el = document.createElement('span');
           el.innerText = "".concat(line, " ").concat(word);
 
           _this.applyStyle(el, {
-            font: "".concat(textFZ, "% ").concat(textFontFamily),
+            position: 'absolute',
+            font: "".concat(textFZ, "%/").concat(fontParams[textFontFamily].lineHeight, " ").concat(textFontFamily),
             whiteSpace: 'nowrap'
           });
 
-          container.appendChild(el);
+          wrapper.appendChild(el);
 
-          if (el.offsetWidth > width - marginHorizontal * 2) {
+          if (el.offsetWidth > containerWidth) {
             textLines.push(line);
             line = word;
           } else {
             line += line === '' ? word : " ".concat(word);
           }
 
-          container.removeChild(el);
+          if (index === word.length - 1) {
+            lineHeight = el.offsetHeight;
+          }
+
+          wrapper.removeChild(el);
 
           if (index === words.length - 1) {
             textLines.push(line);
           }
-        });
+        };
 
-        _this.applyStyle(textEl, {
-          alignItems: textAlign === 'right' ? 'flex-end' : textAlign
-        });
+        while (textFZ > 0 && !fontSizeIsConsistent) {
+          textLines = [];
+          line = '';
+          words.forEach(wordProcessing);
 
-        _this.applyStyle(container, {
+          if (textLines.length > 1 && textLines[textLines.length - 1].indexOf(' ') === -1 || textLines.length * lineHeight > containerHeight - lineHeight) {
+            textFZ -= 1;
+          } else {
+            fontSizeIsConsistent = true;
+          }
+        }
+
+        _this.applyStyle(wrapper, {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: textVerticalAlign === 'bottom' ? 'flex-end' : textVerticalAlign
         });
 
         var textLettersFade = [];
+
+        _this.applyStyle(textEl, {
+          font: "".concat(textFZ, "%/").concat(fontParams[textFontFamily].lineHeight, " ").concat(textFontFamily)
+        });
+
         textLines.forEach(function (lineItem, i) {
           var el = document.createElement('div');
           el.innerText = lineItem;
@@ -1089,27 +1172,27 @@ function () {
 
           textLettersFade.push(fadeLettersIndex);
         });
-        var textElStyle = window.getComputedStyle(textEl, null);
-        var textFontSize = parseFloat(textElStyle.getPropertyValue('font-size'));
+        var textElComputedStyles = window.getComputedStyle(textEl, null);
+        var computedTextFontSize = parseFloat(textElComputedStyles.getPropertyValue('font-size'));
         var authorEl = document.createElement('div');
-        authorEl.id = 'canvas-html-container-author';
+        authorEl.id = 'canvas-html-wrapper-author';
         var authorFZ = textFZ - 5;
         var authorMargin = remapValue(text.length, 10, 256, separator ? 8 : 5, separator ? 6 : 3);
 
         _this.applyStyle(authorEl, {
-          font: "".concat(authorFZ, "%/").concat(lineHeights[authorFontFamily], " ").concat(authorFontFamily),
+          font: "".concat(authorFZ, "%/").concat(fontParams[authorFontFamily].lineHeight, " ").concat(authorFontFamily),
           alignSelf: authorAlign === 'right' ? 'flex-end' : authorAlign,
           marginTop: "".concat(authorMargin, "%")
         });
 
         authorEl.innerText = author;
-        container.appendChild(authorEl);
+        wrapper.appendChild(authorEl);
 
         while (authorEl.offsetWidth > width - marginHorizontal * 2) {
           authorFZ -= 1;
 
           _this.applyStyle(authorEl, {
-            font: "".concat(authorFZ, "%/").concat(lineHeights[authorFontFamily], " ").concat(authorFontFamily)
+            font: "".concat(authorFZ, "%/").concat(fontParams[authorFontFamily].lineHeight, " ").concat(authorFontFamily)
           });
         }
 
@@ -1118,7 +1201,7 @@ function () {
         var authorPositionProps = authorEl.getBoundingClientRect();
         _this.newState = {
           textLettersFade: textLettersFade,
-          textFontSize: textFontSize,
+          textFontSize: computedTextFontSize,
           textLines: textLines,
           author: author,
           authorFontSize: authorFontSize,
@@ -1130,12 +1213,12 @@ function () {
         };
         requestAnimationFrame(function () {
           if (debug) {
-            _this.applyStyle(container, {
+            _this.applyStyle(wrapper, {
               color: 'rgba(255, 255, 255, 0.3)',
               border: '2px solid red'
             });
           } else {
-            _this.containerEl.removeChild(container);
+            _this.containerEl.removeChild(wrapper);
           }
 
           resolve();
@@ -1723,10 +1806,16 @@ function () {
       };
     });
 
+    var _width = props.width < maxCanvasSize ? props.width : maxCanvasSize;
+
+    var _height = props.height < maxCanvasSize ? props.height : maxCanvasSize;
+
     this.newState = _objectSpread({}, props, {
+      width: _width,
+      height: _height,
       text: props.text.trim(),
       textFontSize: props.width / 10,
-      marginHorizontal: props.height / 9,
+      marginHorizontal: _height / 9,
       textFrameOpacity: props.textEffect === 'type' ? 0.5 : 0.1,
       textFrameOpacityStep: props.textEffect === 'type' ? 0.5 : 0.1,
       authorFrameOpacity: props.authorEffect === 'type' ? 0.5 : 0.1,
@@ -1734,13 +1823,13 @@ function () {
     });
     this.loadFonts(this.state.textFontFamily);
     this.loadFonts(this.state.authorFontFamily);
-    var _container = props.container;
+    var container = props.container;
 
     if (typeof props.container === 'string') {
-      _container = document.querySelector(props.container);
+      container = document.querySelector(props.container);
     }
 
-    if (!_container) {
+    if (!container) {
       console.error('Wrong container selector'); // eslint-disable-line
 
       return;
@@ -1750,9 +1839,7 @@ function () {
     this.containerEl.id = 'images-core-container';
     this.canvasEl = document.createElement('canvas');
     this.containerEl.appendChild(this.canvasEl);
-
-    _container.appendChild(this.containerEl);
-
+    container.appendChild(this.containerEl);
     this.context.font = this.getFont(this.state.textFontSize, this.state.textFontFamily);
     this.setCanvasSize();
     this.preloadFontsIntoScope();
@@ -1826,7 +1913,7 @@ if(false) {}
 
 exports = module.exports = __webpack_require__(0)(false);
 // Module
-exports.push([module.i, "#images-core-container {\n    display: inline-block;\n    position: relative;\n}\n\n#canvas-html-container {\n    position: absolute;\n    overflow: hidden;\n    box-sizing: border-box;\n}\n\n#canvas-html-container-text {\n    display: flex;\n    flex-direction: column;\n}\n\n#canvas-html-container-text div {\n    white-space: nowrap;\n}\n\n#canvas-html-container-author {\n    display: flex;\n    flex-direction: column;\n    white-space: nowrap;\n}\n", ""]);
+exports.push([module.i, "#images-core-container {\n    display: inline-block;\n    position: relative;\n}\n\n#canvas-html-wrapper {\n    position: absolute;\n    overflow: hidden;\n    box-sizing: border-box;\n}\n\n#canvas-html-wrapper-text {\n    display: flex;\n    flex-direction: column;\n}\n\n#canvas-html-wrapper-text div {\n    white-space: nowrap;\n}\n\n#canvas-html-wrapper-author {\n    display: flex;\n    flex-direction: column;\n    white-space: nowrap;\n}\n", ""]);
 
 
 
