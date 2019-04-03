@@ -555,9 +555,15 @@ class Renderer {
                 separator ? 8 : 5,
                 separator ? 6 : 3
             );
+            let authorFlexAlign = 'center';
+            if (authorAlign === 'right') {
+                authorFlexAlign = 'flex-end';
+            } else if (authorAlign === 'left') {
+                authorFlexAlign = 'flex-start';
+            }
             this.applyStyle(authorEl, {
                 font: `${authorFZ}%/${fontParams[authorFontFamily].lineHeight} ${authorFontFamily}`,
-                alignSelf: authorAlign === 'right' ? 'flex-end' : authorAlign,
+                alignSelf: authorFlexAlign,
                 marginTop: `${authorMargin}%`,
             });
             authorEl.innerText = author;
