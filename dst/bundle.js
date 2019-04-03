@@ -1178,10 +1178,17 @@ function () {
         authorEl.id = 'canvas-html-wrapper-author';
         var authorFZ = textFZ - 5;
         var authorMargin = remapValue(text.length, 10, 256, separator ? 8 : 5, separator ? 6 : 3);
+        var authorFlexAlign = 'center';
+
+        if (authorAlign === 'right') {
+          authorFlexAlign = 'flex-end';
+        } else if (authorAlign === 'left') {
+          authorFlexAlign = 'flex-start';
+        }
 
         _this.applyStyle(authorEl, {
           font: "".concat(authorFZ, "%/").concat(fontParams[authorFontFamily].lineHeight, " ").concat(authorFontFamily),
-          alignSelf: authorAlign === 'right' ? 'flex-end' : authorAlign,
+          alignSelf: authorFlexAlign,
           marginTop: "".concat(authorMargin, "%")
         });
 
